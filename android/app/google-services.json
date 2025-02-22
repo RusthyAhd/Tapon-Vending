@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "108977191583",
+    "project_id": "tapon-vending",
+    "storage_bucket": "tapon-vending.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108977191583:android:30facce8b8f38d2a8880aa",
+        "android_client_info": {
+          "package_name": "com.example.tapon_vending"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP0s2ix_8fcELaCvpt5GuXuw1539sksnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

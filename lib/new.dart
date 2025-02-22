@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_platform_interface/just_audio_platform_interface.dart';
 import 'package:phone_state/phone_state.dart';
 
 class LiveRadioScreen extends StatefulWidget {
-  const LiveRadioScreen({Key? key}) : super(key: key);
+  const LiveRadioScreen({super.key});
 
   @override
   _LiveRadioScreenState createState() => _LiveRadioScreenState();
@@ -66,7 +65,7 @@ class _LiveRadioScreenState extends State<LiveRadioScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.deepOrange, Colors.brown],
             begin: Alignment.topCenter,
@@ -122,7 +121,7 @@ class _LiveRadioScreenState extends State<LiveRadioScreen> {
             ),
             const SizedBox(height: 20),
             if (_isAdLoaded)
-              Container(
+              SizedBox(
                 height: 50,
                 child: AdWidget(ad: _bannerAd),
               ),
@@ -179,7 +178,7 @@ class _LiveRadioScreenState extends State<LiveRadioScreen> {
             // Navigate to Live Radio Screen
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => LiveRadioScreen()),
+              MaterialPageRoute(builder: (context) => const LiveRadioScreen()),
             );
           } else if (index == 1) {
             // Navigate to Contact Us Screen
