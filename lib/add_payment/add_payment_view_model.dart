@@ -10,13 +10,34 @@ class AddPaymentViewModel extends ChangeNotifier {
     PaymentMethod(type: "Amex", logo: "assets/images/amex.png"),
   ];
 
-  int selectedMethodIndex = -1;
+  PaymentMethod? selectedMethod;
+  String cardNumber = "";
+  String expiryMonth = "01";
+  String expiryYear = "2024";
+  String cvc = "";
 
   void selectMethod(int index) {
-    for (var i = 0; i < paymentMethods.length; i++) {
-      paymentMethods[i].isSelected = i == index;
-    }
-    selectedMethodIndex = index;
+    selectedMethod = paymentMethods[index];
+    notifyListeners();
+  }
+
+  void setCardNumber(String value) {
+    cardNumber = value;
+    notifyListeners();
+  }
+
+  void setExpiryMonth(String value) {
+    expiryMonth = value;
+    notifyListeners();
+  }
+
+  void setExpiryYear(String value) {
+    expiryYear = value;
+    notifyListeners();
+  }
+
+  void setCVC(String value) {
+    cvc = value;
     notifyListeners();
   }
 }

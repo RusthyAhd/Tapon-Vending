@@ -1,10 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tapon_vending/add_payment/add_payment_view.dart';
-import 'package:tapon_vending/payment_method/payment_method_model.dart';
+import 'package:tapon_vending/home/home_view.dart';
+import 'package:tapon_vending/profile/profile_view.dart';
 import 'payment_view_model.dart';
 
-class PaymentPage extends StatelessWidget {
+class PaymentPage extends StatefulWidget {
+  @override
+  _PaymentPageState createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> {
+  int _selectedIndex = 1; // Ensure Payment is selected
+
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
+
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+        break;
+      case 1:
+        break; // Already on Payment
+      case 2:
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => EditProfilePage()));
+                break;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -116,16 +144,18 @@ class PaymentPage extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
+         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.black,
-          selectedItemColor: Colors.green,
+          selectedItemColor: Color.fromRGBO(1, 181, 1, 1),
           unselectedItemColor: Colors.white,
+           currentIndex: _selectedIndex,
+           onTap: _onItemTapped,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.access_time), label: "PAYMENTS"),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "HOME"),
+        BottomNavigationBarItem(icon: Icon(Icons.history), label: "PAYMENT"),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
           ],
+        
         ),
       ),
     );
