@@ -42,7 +42,6 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-
         // Greeting Text
         Positioned(
           top: 20,
@@ -59,7 +58,7 @@ class HomePage extends StatelessWidget {
 
         // Product Grid
         Positioned.fill(
-          top: 70, // Adjust so text is not overlapped
+          top: 50, // Adjust so text is not overlapped
           child: Consumer<HomeViewModel>(
             builder: (context, viewModel, child) {
           return Padding(
@@ -95,7 +94,8 @@ class HomePage extends StatelessWidget {
         switch (index) {
           case 0:
             // Navigate to Home
-            Navigator.pushNamed(context, '/home');
+             Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+            break;
             break;
           case 1:
             // Navigate to Payment

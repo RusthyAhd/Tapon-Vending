@@ -5,6 +5,7 @@ import 'package:tapon_vending/payment_method/payment_method_model.dart';
 class PaymentViewModel extends ChangeNotifier {
   List<PaymentMethod> _methods = [
     PaymentMethod(type: "Credit Card", lastFourDigits: "1234", logo: "assets/images/image2.png"),
+    PaymentMethod(type: "Visa", lastFourDigits: "5678", logo: "assets/images/visa.png"),
   ];
 
   List<PaymentMethod> get methods => _methods;
