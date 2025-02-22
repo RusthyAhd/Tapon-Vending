@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tapon_vending/home/home_view.dart';
 
 class LoginViewModel extends ChangeNotifier {
   String emailOrMobile = "";
@@ -32,5 +33,6 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Login Successful")));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 }
