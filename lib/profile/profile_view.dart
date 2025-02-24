@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tapon_vending/change_password/change_password_view.dart';
+import 'package:tapon_vending/custom/custom_bottom_nav_bar.dart';
 import 'package:tapon_vending/home/home_view.dart';
+import 'package:tapon_vending/payment_method/payment_view.dart';
 import 'package:tapon_vending/profile/profile_view_model.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -25,10 +27,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             context, MaterialPageRoute(builder: (context) => HomePage()));
         break;
       case 1:
-        break; // Already on Payment
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => PaymentPage ()));
+        break;
       case 2:
-         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => EditProfilePage()));
         break;
     }
   }
@@ -160,18 +162,9 @@ body:Stack(
         ),
           ],
         ),
-         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.black,
-          selectedItemColor: Color.fromRGBO(1, 181, 1, 1),
-          unselectedItemColor: Colors.white,
-           currentIndex: _selectedIndex,
-           onTap: _onItemTapped,
-          items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "HOME"),
-        BottomNavigationBarItem(icon: Icon(Icons.history), label: "PAYMENT"),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: "PROFILE"),
-          ],
-        
+          bottomNavigationBar: CustomBottomNavBar(
+          selectedIndex: _selectedIndex,
+          onItemTapped: _onItemTapped,
         ),
       
        ); },

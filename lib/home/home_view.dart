@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tapon_vending/custom/custom_bottom_nav_bar.dart';
 import 'package:tapon_vending/custom/product_tile.dart';
 import 'package:tapon_vending/home/home_view_model.dart';
 import 'package:tapon_vending/payment_method/payment_view.dart';
@@ -110,17 +111,9 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.black,
-          selectedItemColor: Color.fromRGBO(1, 181, 1, 1),
-          unselectedItemColor: Colors.white,
-          currentIndex: _selectedIndex, // Set the selected index
-          onTap: _onItemTapped, // Handle navigation
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "HOME"),
-            BottomNavigationBarItem(icon: Icon(Icons.history), label: "PAYMENT"),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "PROFILE"),
-          ],
+        bottomNavigationBar: CustomBottomNavBar(
+          selectedIndex: _selectedIndex,
+          onItemTapped: _onItemTapped,
         ),
       ),
     );
