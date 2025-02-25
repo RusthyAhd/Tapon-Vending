@@ -1,12 +1,12 @@
 buildscript {
     repositories {
         google()
-        mavenCentral()  // Add this line
-        jcenter() // Optional
+        mavenCentral()  // Required for dependency resolution
+        jcenter() // Optional (deprecated, use only if necessary)
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.3' // Check your Gradle version here
-        classpath "com.google.gms:google-services:4.4.2" // Add this line
+        classpath 'com.android.tools.build:gradle:8.2.2'  // ✅ Use the latest stable version
+        classpath "com.google.gms:google-services:4.4.2" // Google services
     }
 }
 
@@ -14,14 +14,16 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter() 
+        jcenter() // Optional (deprecated)
     }
 }
 
 rootProject.buildDir = "../build"
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
