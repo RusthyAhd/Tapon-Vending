@@ -29,8 +29,8 @@ class _HomePageState extends State<HomePage> {
             context, MaterialPageRoute(builder: (context) => PaymentPage()));
         break;
       case 2:
-      Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => EditProfilePage()));     
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => EditProfilePage()));
         break;
     }
   }

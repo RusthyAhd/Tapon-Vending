@@ -1,29 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:tapon_vending/home/product_model.dart';
+import 'package:tapon_vending/Popup/confirmation_popup.dart';
 
 class ProductTile extends StatelessWidget {
   final ProductModel product;
 
-  ProductTile({required this.product});
+  const ProductTile({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.blueGrey.shade700.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: EdgeInsets.all(4),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.network(product.imageUrl, height: 70,width:100),
-          SizedBox(height: 10),
-          Text(product.name, textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 12)),
-          SizedBox(height: 5),
-          Text("\$${product.oldPrice}", style: TextStyle(color: Colors.white, fontSize: 10, decoration: TextDecoration.lineThrough)),
-          Text("\$${product.price}", style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)),
-        ],
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) => ConfirmationPopup(),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(product.imageUrl, height: 80, width: 80),
+            SizedBox(height: 10),
+            Text(
+              product.name,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text("\$${product.price.toStringAsFixed(2)}"),
+            Text(
+              "\$${product.oldPrice.toStringAsFixed(2)}",
+              style: TextStyle(
+                decoration: TextDecoration.lineThrough,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
