@@ -7,12 +7,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:108977191583:android:30facce8b8f38d2a8880aa",
+        "mobilesdk_app_id": "1:108977191583:android:da7385e2833bc1488880aa",
         "android_client_info": {
           "package_name": "com.example.tapon_vending"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "108977191583-p8ja4kf4djgl4t0i7m6bh330qg4v8cq1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tapon_vending",
+            "certificate_hash": "cd03cc55e606e33b0cc4be57723e0f25da2c2cff"
+          }
+        },
+        {
+          "client_id": "108977191583-aqt2nsdgha3fd4mu9jcm9vfsq3r2gu3e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCP0s2ix_8fcELaCvpt5GuXuw1539sksnE"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108977191583-aqt2nsdgha3fd4mu9jcm9vfsq3r2gu3e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
