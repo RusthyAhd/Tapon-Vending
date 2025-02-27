@@ -76,13 +76,17 @@ class _HomePageState extends State<HomePage> {
             Positioned(
               top: 20,
               left: 20,
-              child: Text(
-                "Hi, Rishaf!",
-                style: TextStyle(
+             child: Consumer<HomeViewModel>(
+                builder: (context, viewModel, child) {
+                  return Text(
+                    "Hi, ${viewModel.userName.isNotEmpty ? viewModel.userName : 'Guest'}!",
+                    style: TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
+                  );
+                },
               ),
             ),
 

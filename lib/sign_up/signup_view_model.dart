@@ -215,3 +215,13 @@ class SignupViewModel extends ChangeNotifier {
     }
   }
 }
+
+//save user name
+Future<void> saveUserName(String name) async {
+  User? user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      'name': name,
+    });
+  }
+}

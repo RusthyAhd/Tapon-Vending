@@ -106,7 +106,10 @@ class ForgotPasswordView extends StatelessWidget {
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            viewModel.setEmail(emailController.text);
+                            viewModel.resetPassword(context);
+                          },
                           child: viewModel.isLoading
                               ? const CircularProgressIndicator(
                                   color: Colors.white)
