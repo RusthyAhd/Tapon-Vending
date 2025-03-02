@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tapon_vending/custom/confirmation_dialog.dart';
+
 import 'package:tapon_vending/home/product_model.dart';
 
 class ProductTile extends StatelessWidget {
@@ -8,22 +10,28 @@ class ProductTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.blueGrey.shade700.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: EdgeInsets.all(4),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.network(product.imageUrl, height: 70,width:100),
-          SizedBox(height: 10),
-          Text(product.name, textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 12)),
-          SizedBox(height: 5),
-          Text("\$${product.oldPrice}", style: TextStyle(color: Colors.white, fontSize: 10, decoration: TextDecoration.lineThrough)),
-          Text("\$${product.price}", style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)),
-        ],
+    return GestureDetector(
+      onTap: () {
+        showConfirmationDialog(context, product.name, () {
+          // Handle the confirmation action here
+          print('Order confirmed for ${product.name}');
+        });
+      },
+      child: Card(
+        child: Column(
+          children: [
+            Image.asset(
+              product.imageUrl,
+              height: 100, // Adjust the height to make the image smaller
+              width: 80, // Adjust the width to make the image smaller
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: 10), // Add some spacing between the image and text
+            Text(product.name),
+             SizedBox(height: 10),
+            Text('\Rs. ${product.price.toStringAsFixed(2)}'),
+          ],
+        ),
       ),
     );
   }

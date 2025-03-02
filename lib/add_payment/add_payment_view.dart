@@ -10,6 +10,12 @@ class AddPaymentPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Color.fromRGBO(13, 13, 13, 1),
         appBar: AppBar(
+            leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            ),
           backgroundColor: Color.fromRGBO(13, 13, 13, 1),
           title: Center(
             child: Text("Add Payment Method",

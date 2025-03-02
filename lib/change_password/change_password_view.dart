@@ -62,7 +62,7 @@ class ChangePasswordView extends StatelessWidget {
                   SizedBox(height: 30),
                   Center(
                     child: Container(
-                                  height: 40, // Added width to the button
+                                  height: 55, // Added width to the button
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                     colors: [ Color.fromRGBO(1, 181, 1, 1), Color.fromRGBO(1, 135, 95, 1)],
@@ -78,7 +78,7 @@ class ChangePasswordView extends StatelessWidget {
                                     ),
                                     onPressed: () {
                                     },
-                                    child: Text("Update", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16)),
+                                    child: Text("Update", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18)),
                                   ),
                                   ),),
                 ],

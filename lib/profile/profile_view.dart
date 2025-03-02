@@ -75,22 +75,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       ),
+                      // add sizebox to add space between the text and the top
+                      Positioned(
+                        top: 80,
+                        left: (MediaQuery.of(context).size.width - 200) / 2,
+                        child: Center(
+                          child: Text(
+                            "EDIT PROFILE",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Center(
-                              child: Text(
-                                'EDIT PROFILE',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 40),
+                            SizedBox(height: 150),
                             // Name Field
                             Text("Name", style: TextStyle(color: Colors.white)),
                             TextField(
@@ -144,7 +149,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             Spacer(),
                             Center(
                               child: Container(
-                                height: 40, // Added width to the button
+                                height: 50, // Added width to the button
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
@@ -167,7 +172,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     viewModel.updateUserProfile();
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                          content: Text("Your profile details updated")),
+                                          content: Text(
+                                              "Your profile details updated")),
                                     );
                                   },
                                   child: Text("Save",

@@ -19,15 +19,15 @@ class SignupView extends StatelessWidget {
       child: Consumer<SignupViewModel>(
         builder: (context, viewModel, child) {
           return Scaffold(
-             backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Container(
-              width: 240,
-              height: 210,
+            backgroundColor: Colors.black,
+            body: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Container(
+                    width: 240,
+                    height: 210,
               decoration: const BoxDecoration(
                 color: Color.fromRGBO(5, 248, 175, 0.3),
                 borderRadius: BorderRadius.only(
@@ -52,6 +52,7 @@ class SignupView extends StatelessWidget {
           ),
  Padding(
               padding: const EdgeInsets.all(20),
+
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -139,7 +140,7 @@ class SignupView extends StatelessWidget {
                     ),
                       const SizedBox(height: 10),
                     Container(
-                      height: 40, // Added width to the button
+                      height: 55, // Added width to the button
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -178,13 +179,13 @@ class SignupView extends StatelessWidget {
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16),
+                                    fontSize: 18),
                               ),
                       ),
                     ),
                     const SizedBox(height: 20),
 
-                    Text('Already have an account? Log in',
+                    Text('Already have an account? ',
                       style: TextStyle(color: Colors.white, fontSize: 16)),
                   GestureDetector(
                     onTap: (){

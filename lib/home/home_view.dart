@@ -29,8 +29,8 @@ class _HomePageState extends State<HomePage> {
             context, MaterialPageRoute(builder: (context) => PaymentPage()));
         break;
       case 2:
-      Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => EditProfilePage()));     
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => EditProfilePage()));
         break;
     }
   }
@@ -74,17 +74,17 @@ class _HomePageState extends State<HomePage> {
             ),
             // Greeting Text
             Positioned(
-              top: 20,
+              top: 100,
               left: 20,
-             child: Consumer<HomeViewModel>(
+              child: Consumer<HomeViewModel>(
                 builder: (context, viewModel, child) {
                   return Text(
                     "Hi, ${viewModel.userName.isNotEmpty ? viewModel.userName : 'Guest'}!",
                     style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   );
                 },
               ),
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
 
             // Product Grid
             Positioned.fill(
-              top: 50, // Adjust so text is not overlapped
+              top: 120, // Adjust so text is not overlapped
               child: Consumer<HomeViewModel>(
                 builder: (context, viewModel, child) {
                   return Padding(
@@ -102,11 +102,16 @@ class _HomePageState extends State<HomePage> {
                         crossAxisCount: 3,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        childAspectRatio: 1,
+                        childAspectRatio: 0.6, // Adjusted aspect ratio
                       ),
                       itemCount: viewModel.products.length,
                       itemBuilder: (context, index) {
-                        return ProductTile(product: viewModel.products[index]);
+                        return Padding(
+                          padding: const EdgeInsets.all(
+                              4.0), // Add padding around each product
+                          child:
+                              ProductTile(product: viewModel.products[index]),
+                        );
                       },
                     ),
                   );

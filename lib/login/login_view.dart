@@ -8,18 +8,18 @@ import 'package:tapon_vending/services/google_sign_in_service.dart';
 import 'package:tapon_vending/sign_up/signup_view.dart';
 
 class LoginPage extends StatelessWidget {
-   void _handleGoogleSignIn(BuildContext context) async {
-    User? user = await GoogleSignInService().signInWithGoogle();
-    if (user != null) {
-      // Navigate to home page or profile
-      Navigator.pushReplacementNamed(context, '/home');
-    } else {
-      // Handle error or display message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Google Sign-In Failed")),
-      );
-    }
-  }
+  //  void _handleGoogleSignIn(BuildContext context) async {
+  //   User? user = await GoogleSignInService().signInWithGoogle();
+  //   if (user != null) {
+  //     // Navigate to home page or profile
+  //     Navigator.pushReplacementNamed(context, '/home');
+  //   } else {
+  //     // Handle error or display message
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text("Google Sign-In Failed")),
+  //     );
+  //   }
+  // }
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -104,7 +104,7 @@ class LoginPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           CustomTextField(
-                            hint: "******************************",
+                            hint: "**************",
                             controller: passwordController,
                             isPassword: true,
                           ),
@@ -143,7 +143,7 @@ class LoginPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           Container(
-                            height: 40,
+                            height: 55,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
@@ -223,7 +223,7 @@ class LoginPage extends StatelessWidget {
                               padding: EdgeInsets.only(left: 20.0),
                               child: Text("Sign in with Google"),
                             ),
-                             onPressed: () => _handleGoogleSignIn(context),
+                             onPressed: () {}
                           ),
                         ],
                       ),

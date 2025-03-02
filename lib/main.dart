@@ -2,6 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tapon_vending/firebase_options.dart';
 import 'package:tapon_vending/login/login_view.dart';
+import 'package:tapon_vending/login/login_view_model.dart';
+
+import 'package:tapon_vending/payment_method/payment_view.dart';
+import 'package:tapon_vending/sign_up/signup_view.dart';
+import 'package:tapon_vending/sign_up/signup_view_model.dart';
 
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
