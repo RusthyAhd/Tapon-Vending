@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '108977191583',
     projectId: 'tapon-vending',
     storageBucket: 'tapon-vending.firebasestorage.app',
-    androidClientId: '108977191583-p8ja4kf4djgl4t0i7m6bh330qg4v8cq1.apps.googleusercontent.com',
+    androidClientId: '108977191583-mheckpcnvhqhilepm1qft013vi0ppa03.apps.googleusercontent.com',
     iosClientId: '108977191583-2rgia4niejr6g0g79njhgvuemnbebv7f.apps.googleusercontent.com',
     iosBundleId: 'com.example.taponVending',
   );
@@ -74,7 +74,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '108977191583',
     projectId: 'tapon-vending',
     storageBucket: 'tapon-vending.firebasestorage.app',
-    androidClientId: '108977191583-p8ja4kf4djgl4t0i7m6bh330qg4v8cq1.apps.googleusercontent.com',
+    androidClientId: '108977191583-mheckpcnvhqhilepm1qft013vi0ppa03.apps.googleusercontent.com',
     iosClientId: '108977191583-2rgia4niejr6g0g79njhgvuemnbebv7f.apps.googleusercontent.com',
     iosBundleId: 'com.example.taponVending',
   );

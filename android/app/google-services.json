@@ -37,6 +37,49 @@
             {
               "client_id": "108977191583-aqt2nsdgha3fd4mu9jcm9vfsq3r2gu3e.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "108977191583-2rgia4niejr6g0g79njhgvuemnbebv7f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.taponVending"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108977191583:android:b382e5f52fe5019b8880aa",
+        "android_client_info": {
+          "package_name": "com.example.taponvending_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108977191583-aqt2nsdgha3fd4mu9jcm9vfsq3r2gu3e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP0s2ix_8fcELaCvpt5GuXuw1539sksnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108977191583-aqt2nsdgha3fd4mu9jcm9vfsq3r2gu3e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "108977191583-2rgia4niejr6g0g79njhgvuemnbebv7f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.taponVending"
+              }
             }
           ]
         }
