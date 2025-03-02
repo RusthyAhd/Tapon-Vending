@@ -29,11 +29,12 @@ class _PaymentPageState extends State<PaymentPage> {
       case 1:
         break; // Already on Payment
       case 2:
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => EditProfilePage()));
-                break;
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => EditProfilePage()));
+        break;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -75,26 +76,47 @@ class _PaymentPageState extends State<PaymentPage> {
               top: 20,
               left: MediaQuery.of(context).size.width / 2,
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Text(
-                        "PAYMENT",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold,fontSize: 25),
-                      ),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      "PAYMENT",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25),
                     ),
-                    Text(
-                      "payment with securely",
-                      style: TextStyle(color: Colors.white70, fontSize: 12),
-                    ),
-                  ],
-                ),
+                  ),
+                  Text(
+                    "payment with securely",
+                    style: TextStyle(color: Colors.white70, fontSize: 12),
+                  ),
+                  SizedBox(height: 20), // Added SizedBox for spacing
+                ],
               ),
-           
+            ),
+
+            // Balance Card
+            Positioned.fill(
+              top: 100, // Adjusted top position to account for the new SizedBox
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: BalanceCard(),
+              ),
+            ),
+
+            // SizedBox for spacing
+            Positioned.fill(
+              top: 260,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: SizedBox(height: 20),
+              ),
+            ),
+
             // Payment Methods List
             Positioned.fill(
-                top: 80, 
+              top: 280,
               child: Consumer<PaymentViewModel>(
                 builder: (context, viewModel, child) {
                   return Padding(
@@ -106,7 +128,11 @@ class _PaymentPageState extends State<PaymentPage> {
                           return Card(
                             color: Colors.black.withOpacity(0.5),
                             child: ListTile(
-                              leading: Image.asset(method.logo, width: 40,fit: BoxFit.contain,),
+                              leading: Image.asset(
+                                method.logo,
+                                width: 40,
+                                fit: BoxFit.contain,
+                              ),
                               title: Text(method.type,
                                   style: TextStyle(color: Colors.white)),
                               subtitle: Text("**** ${method.lastFourDigits}",
@@ -117,7 +143,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                   Text("Change",
                                       style: TextStyle(color: Colors.green)),
                                   IconButton(
-                                    icon: Icon(Icons.delete, color: Colors.white),
+                                    icon:
+                                        Icon(Icons.delete, color: Colors.white),
                                     onPressed: () {
                                       viewModel.removePaymentMethod(
                                           viewModel.methods.indexOf(method));
@@ -131,7 +158,10 @@ class _PaymentPageState extends State<PaymentPage> {
                         const SizedBox(height: 20),
                         TextButton.icon(
                           onPressed: () {
-                           Navigator.push(context, MaterialPageRoute(builder: (context) => AddPaymentPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddPaymentPage()));
                           },
                           icon: Icon(Icons.add, color: Colors.white),
                           label: Text("Add new method",
@@ -145,10 +175,64 @@ class _PaymentPageState extends State<PaymentPage> {
             ),
           ],
         ),
-         bottomNavigationBar: CustomBottomNavBar(
+        bottomNavigationBar: CustomBottomNavBar(
           selectedIndex: _selectedIndex,
           onItemTapped: _onItemTapped,
         ),
+      ),
+    );
+  }
+}
+
+class BalanceCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 320,
+      height: 200,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.blueGrey.shade900,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "My Balance",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.show_chart, color: Colors.white70),
+                onPressed: () {},
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "-5133.24 LkR",
+            style: TextStyle(
+              color: Colors.redAccent,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "Please top up your balance to keep your account active.",
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 14,
+            ),
+          ),
+        ],
       ),
     );
   }

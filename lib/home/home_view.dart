@@ -29,8 +29,8 @@ class _HomePageState extends State<HomePage> {
             context, MaterialPageRoute(builder: (context) => PaymentPage()));
         break;
       case 2:
-      Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => EditProfilePage()));     
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => EditProfilePage()));
         break;
     }
   }
@@ -76,15 +76,15 @@ class _HomePageState extends State<HomePage> {
             Positioned(
               top: 20,
               left: 20,
-             child: Consumer<HomeViewModel>(
+              child: Consumer<HomeViewModel>(
                 builder: (context, viewModel, child) {
                   return Text(
                     "Hi, ${viewModel.userName.isNotEmpty ? viewModel.userName : 'Guest'}!",
                     style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   );
                 },
               ),
@@ -102,11 +102,16 @@ class _HomePageState extends State<HomePage> {
                         crossAxisCount: 3,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        childAspectRatio: 1,
+                        childAspectRatio: 0.75, // Adjusted aspect ratio
                       ),
                       itemCount: viewModel.products.length,
                       itemBuilder: (context, index) {
-                        return ProductTile(product: viewModel.products[index]);
+                        return Padding(
+                          padding: const EdgeInsets.all(
+                              4.0), // Add padding around each product
+                          child:
+                              ProductTile(product: viewModel.products[index]),
+                        );
                       },
                     ),
                   );
