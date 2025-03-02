@@ -86,7 +86,7 @@ class ForgotPasswordView extends StatelessWidget {
                           hint: "Enter email", controller: emailController),
                       const SizedBox(height: 20),
                       Container(
-                        height: 40, // Added width to the button
+                        height: 55, // Added width to the button
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -117,7 +117,7 @@ class ForgotPasswordView extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 16)),
+                                      fontSize: 18)),
                         ),
                       ),
                       const SizedBox(height: 50),

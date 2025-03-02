@@ -5,7 +5,7 @@ import 'package:tapon_vending/firebase_options.dart';
 import 'package:tapon_vending/home/home_view.dart';
 import 'package:tapon_vending/login/login_view.dart';
 import 'package:tapon_vending/login/login_view_model.dart';
-import 'package:tapon_vending/new.dart';
+
 import 'package:tapon_vending/payment_method/payment_view.dart';
 import 'package:tapon_vending/sign_up/signup_view.dart';
 import 'package:tapon_vending/sign_up/signup_view_model.dart';
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PaymentPage(),
+      home: LoginPage(),
     );
   }
 }

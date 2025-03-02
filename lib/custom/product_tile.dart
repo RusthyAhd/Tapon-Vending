@@ -22,12 +22,13 @@ class ProductTile extends StatelessWidget {
           children: [
             Image.asset(
               product.imageUrl,
-              height: 70, // Adjust the height to make the image smaller
-              width: 70, // Adjust the width to make the image smaller
+              height: 100, // Adjust the height to make the image smaller
+              width: 80, // Adjust the width to make the image smaller
               fit: BoxFit.cover,
             ),
-            SizedBox(height: 8), // Add some spacing between the image and text
+            SizedBox(height: 10), // Add some spacing between the image and text
             Text(product.name),
+             SizedBox(height: 10),
             Text('\Rs. ${product.price.toStringAsFixed(2)}'),
           ],
         ),

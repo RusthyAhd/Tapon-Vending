@@ -87,7 +87,7 @@ class LoginPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           CustomTextField(
-                            hint: "******************************",
+                            hint: "**************",
                             controller: passwordController,
                             isPassword: true,
                           ),
@@ -126,7 +126,7 @@ class LoginPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           Container(
-                            height: 40,
+                            height: 55,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [

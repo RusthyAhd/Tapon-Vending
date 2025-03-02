@@ -73,32 +73,35 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
             ),
             Positioned(
-              top: 20,
-              left: MediaQuery.of(context).size.width / 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Text(
-                      "PAYMENT",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25),
+              top: 60,
+              left: (MediaQuery.of(context).size.width - 150) / 2,
+              child: Center(
+                // Wrap the Column with Center
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        "PAYMENT",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25),
+                      ),
                     ),
-                  ),
-                  Text(
-                    "payment with securely",
-                    style: TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
-                  SizedBox(height: 20), // Added SizedBox for spacing
-                ],
+                    Text(
+                      "payment with securely",
+                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                    ),
+                    SizedBox(height: 50), // Added SizedBox for spacing
+                  ],
+                ),
               ),
             ),
 
             // Balance Card
             Positioned.fill(
-              top: 100, // Adjusted top position to account for the new SizedBox
+              top: 150, // Adjusted top position to account for the new SizedBox
               child: Align(
                 alignment: Alignment.topCenter,
                 child: BalanceCard(),
@@ -107,7 +110,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
             // SizedBox for spacing
             Positioned.fill(
-              top: 260,
+              top: 350,
               child: Align(
                 alignment: Alignment.topCenter,
                 child: SizedBox(height: 20),
@@ -116,7 +119,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
             // Payment Methods List
             Positioned.fill(
-              top: 280,
+              top: 350,
               child: Consumer<PaymentViewModel>(
                 builder: (context, viewModel, child) {
                   return Padding(

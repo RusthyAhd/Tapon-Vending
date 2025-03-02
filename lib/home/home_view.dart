@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
             ),
             // Greeting Text
             Positioned(
-              top: 20,
+              top: 100,
               left: 20,
               child: Consumer<HomeViewModel>(
                 builder: (context, viewModel, child) {
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
 
             // Product Grid
             Positioned.fill(
-              top: 50, // Adjust so text is not overlapped
+              top: 120, // Adjust so text is not overlapped
               child: Consumer<HomeViewModel>(
                 builder: (context, viewModel, child) {
                   return Padding(
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisCount: 3,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        childAspectRatio: 0.75, // Adjusted aspect ratio
+                        childAspectRatio: 0.6, // Adjusted aspect ratio
                       ),
                       itemCount: viewModel.products.length,
                       itemBuilder: (context, index) {
