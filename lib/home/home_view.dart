@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    if (_selectedIndex == index) return; // Prevent unnecessary reload
+    if (_selectedIndex == index) return;
 
     setState(() {
       _selectedIndex = index;
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
 
     switch (index) {
       case 0:
-        break; // Already on Home
+        break;
       case 1:
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => PaymentPage()));
@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.black,
         body: Stack(
           children: [
-            // Green background decoration
             Positioned(
               top: 0,
               left: 0,
@@ -72,7 +71,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            // Greeting Text
             Positioned(
               top: 100,
               left: 20,
@@ -89,12 +87,16 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-
-            // Product Grid
             Positioned.fill(
-              top: 120, // Adjust so text is not overlapped
+              top: 120,
               child: Consumer<HomeViewModel>(
                 builder: (context, viewModel, child) {
+                  if (viewModel.products.isEmpty) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
                   return Padding(
                     padding: EdgeInsets.all(10),
                     child: GridView.builder(
@@ -106,11 +108,32 @@ class _HomePageState extends State<HomePage> {
                       ),
                       itemCount: viewModel.products.length,
                       itemBuilder: (context, index) {
+                        final product = viewModel.products[index];
+                        // return Card(
+                        //   color: Colors.white,
+                        //   shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(10)),
+                        //   margin: EdgeInsets.symmetric(vertical: 5),
                         return Padding(
                           padding: const EdgeInsets.all(
-                              4.0), // Add padding around each product
-                          child:
-                              ProductTile(product: viewModel.products[index]),
+                              4.0), 
+                          // child: ListTile(
+                          //   title: Text(
+                          //     product.name,
+                          //     style: TextStyle(fontWeight: FontWeight.bold),
+                          //   ),
+                          //   subtitle: Column(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       Text(
+                          //           "Price Before Discount: \$${product.priceBefore}"),
+                          //       Text(
+                          //           "Price After Discount: \$${product.priceAfter}"),
+                          //     ],
+                          //   ),
+                          // ),
+                         child:
+                              ProductTile(product: viewModel.products[index]),  
                         );
                       },
                     ),
