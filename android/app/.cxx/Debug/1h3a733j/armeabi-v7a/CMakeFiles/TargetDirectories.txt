@@ -1,0 +1,2 @@
+D:/TapOn-vending/Tapon-Vending/android/app/.cxx/Debug/1h3a733j/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/TapOn-vending/Tapon-Vending/android/app/.cxx/Debug/1h3a733j/armeabi-v7a/CMakeFiles/rebuild_cache.dir
