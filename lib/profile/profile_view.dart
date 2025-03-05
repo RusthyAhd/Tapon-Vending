@@ -124,7 +124,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               style: TextStyle(color: Colors.white),
                             ),
                             SizedBox(height: 10),
+// Display Balance
+                            Text(
+                                "Balance: \Rs.${viewModel.balance.toStringAsFixed(2)}",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16)),
 
+                            SizedBox(height: 10),
                             // Password Section
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

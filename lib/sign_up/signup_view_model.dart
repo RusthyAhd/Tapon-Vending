@@ -103,6 +103,7 @@
 // }
 
 // }import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -187,6 +188,7 @@ class SignupViewModel extends ChangeNotifier {
           "mobile": mobile,
           "userId": user.uid,
           "createdAt": FieldValue.serverTimestamp(),
+          "balance": 0, // Initial balance set to zero
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
