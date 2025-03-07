@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-
-
 import 'confirmation_view_model.dart';
 
 class ConfirmationPopup extends StatelessWidget {
@@ -28,7 +25,11 @@ class ConfirmationPopup extends StatelessWidget {
               )),
         ),
         TextButton(
-          onPressed: viewModel.onConfirm,
+          onPressed: () {
+            viewModel.onConfirm();
+            // Call the passed confirmation callback
+            viewModel.onConfirmCallback();
+          },
           child: Obx(() => Text(
                 viewModel.confirmationData.value.confirmText,
                 style: const TextStyle(color: Colors.green),

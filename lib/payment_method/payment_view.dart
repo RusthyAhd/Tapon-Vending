@@ -190,53 +190,59 @@ class _PaymentPageState extends State<PaymentPage> {
 class BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 320,
-      height: 200,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.blueGrey.shade900,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Consumer<PaymentViewModel>(
+      builder: (context, viewModel, child) {
+        return Container(
+          width: 320,
+          height: 200,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.blueGrey.shade900,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "My Balance",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "My Balance",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.refresh, color: Colors.white70),
+                    onPressed: () => viewModel.fetchBalance(),
+                  ),
+                ],
               ),
-              IconButton(
-                icon: const Icon(Icons.show_chart, color: Colors.white70),
-                onPressed: () {},
+              const SizedBox(height: 10),
+              viewModel.isLoading
+                  ? Center(child: CircularProgressIndicator(color: Colors.green))
+                  : Text(
+                      "${viewModel.balance.toStringAsFixed(2)} LkR",
+                      style: TextStyle(
+                        color: viewModel.balance < 0 ? Colors.redAccent : Colors.greenAccent,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+              const SizedBox(height: 10),
+              const Text(
+                "Please top up your balance to keep your account active.",
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                ),
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          const Text(
-            "-5133.24 LkR",
-            style: TextStyle(
-              color: Colors.redAccent,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            "Please top up your balance to keep your account active.",
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: 14,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

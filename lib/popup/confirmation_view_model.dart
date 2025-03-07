@@ -1,6 +1,6 @@
+import 'dart:ui';
 
 import 'package:get/get.dart';
-
 import 'confirmation_model.dart';
 
 class ConfirmationViewModel extends GetxController {
@@ -11,12 +11,20 @@ class ConfirmationViewModel extends GetxController {
     cancelText: "Cancel",
   ).obs;
 
+  late VoidCallback onConfirmCallback;
+
   void onConfirm() {
-    // Handle confirm logic (e.g., API call, local state change)
-    Get.back(result: true);
+    // Call the callback function when confirmed
+    if (onConfirmCallback != null) {
+      onConfirmCallback();
+    }
   }
 
   void onCancel() {
     Get.back(result: false);
+  }
+
+  void setConfirmCallback(VoidCallback callback) {
+    onConfirmCallback = callback;
   }
 }

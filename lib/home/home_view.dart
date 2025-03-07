@@ -87,8 +87,11 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            Positioned.fill(
+            Positioned(
               top: 120,
+              left: 0,
+              right: 0,
+              bottom: 0, // Ensure it doesn't overflow
               child: Consumer<HomeViewModel>(
                 builder: (context, viewModel, child) {
                   if (viewModel.products.isEmpty) {
@@ -99,24 +102,22 @@ class _HomePageState extends State<HomePage> {
 
                   return Padding(
                     padding: EdgeInsets.all(10),
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 0.6, // Adjusted aspect ratio
-                      ),
-                      itemCount: viewModel.products.length,
-                      itemBuilder: (context, index) {
-                        final product = viewModel.products[index];
-                        // return Card(
-                        //   color: Colors.white,
-                        //   shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(10)),
-                        //   margin: EdgeInsets.symmetric(vertical: 5),
-                        return Padding(
-                          padding: const EdgeInsets.all(
-                              4.0), 
+                    child: Expanded(
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 0.6, // Adjusted aspect ratio
+                        ),
+                        itemCount: viewModel.products.length,
+                        itemBuilder: (context, index) {
+                          // return Card(
+                          //   color: Colors.white,
+                          //   shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(10)),
+                          //   margin: EdgeInsets.symmetric(vertical: 5),
+
                           // child: ListTile(
                           //   title: Text(
                           //     product.name,
@@ -132,10 +133,10 @@ class _HomePageState extends State<HomePage> {
                           //     ],
                           //   ),
                           // ),
-                         child:
-                              ProductTile(product: viewModel.products[index]),  
-                        );
-                      },
+                          return ProductTile(
+                              product: viewModel.products[index]);
+                        },
+                      ),
                     ),
                   );
                 },
