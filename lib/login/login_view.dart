@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tapon_vending/custom/custom_text_field.dart';
 import 'package:tapon_vending/forgot_password/forgot_password_view.dart';
 import 'package:tapon_vending/login/login_view_model.dart';
-import 'package:tapon_vending/services/google_sign_in_service.dart';
 import 'package:tapon_vending/sign_up/signup_view.dart';
 
 class LoginPage extends StatelessWidget {
