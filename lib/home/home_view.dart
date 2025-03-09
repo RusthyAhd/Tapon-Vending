@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tapon_vending/bluetooth_service.dart.dart';
+import 'package:tapon_vending/connect_to_machine.dart';
 import 'package:tapon_vending/custom/custom_bottom_nav_bar.dart';
 import 'package:tapon_vending/custom/product_tile.dart';
 import 'package:tapon_vending/home/home_view_model.dart';
@@ -112,6 +115,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         itemCount: viewModel.products.length,
                         itemBuilder: (context, index) {
+                          
                           // return Card(
                           //   color: Colors.white,
                           //   shape: RoundedRectangleBorder(
@@ -137,13 +141,20 @@ class _HomePageState extends State<HomePage> {
                               product: viewModel.products[index]);
                         },
                       ),
+                      
                     ),
+                    
                   );
+                  
                 },
+                
               ),
+              
             ),
+            
           ],
         ),
+        
         bottomNavigationBar: CustomBottomNavBar(
           selectedIndex: _selectedIndex,
           onItemTapped: _onItemTapped,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tapon_vending/connect_to_machine.dart';
 import 'package:tapon_vending/custom/custom_text_field.dart';
 import 'package:tapon_vending/login/login_view.dart';
 import 'package:tapon_vending/sign_up/signup_view_model.dart';
@@ -182,7 +183,9 @@ class SignupView extends StatelessWidget {
                                     fontSize: 18),
                               ),
                       ),
+                      
                     ),
+                      
                     const SizedBox(height: 20),
 
                     Text('Already have an account? ',
