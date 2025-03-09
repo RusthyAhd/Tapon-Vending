@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tapon_vending/connect_to_machine/connect_to_machine.dart';
 import 'package:tapon_vending/home/home_view.dart';
 
 class LoginViewModel extends ChangeNotifier {
@@ -51,7 +52,7 @@ class LoginViewModel extends ChangeNotifier {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => ConnectToMachine ()),
       );
     } on FirebaseAuthException catch (e) {
       isLoading = false;
