@@ -1,0 +1,2 @@
+D:/Tapon-Vending/android/app/.cxx/Debug/164r20f5/x86_64/CMakeFiles/edit_cache.dir
+D:/Tapon-Vending/android/app/.cxx/Debug/164r20f5/x86_64/CMakeFiles/rebuild_cache.dir

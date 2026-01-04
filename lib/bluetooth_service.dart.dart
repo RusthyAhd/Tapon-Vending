@@ -1,26 +1,34 @@
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
-
 class BluetoothService {
   final FlutterReactiveBle _ble = FlutterReactiveBle();
   late Stream<DiscoveredDevice> scanStream;
   late QualifiedCharacteristic txCharacteristic;
   late QualifiedCharacteristic rxCharacteristic;
-    
+
   // Add this getter
   FlutterReactiveBle get ble => _ble;
 
-
   bool isConnected = false;
-  String serviceUUID = "12345678-1234-5678-1234-56789abcdef0"; // Change to your ESP32 service UUID
+  String serviceUUID =
+      "12345678-1234-5678-1234-56789abcdef0"; // Change to your ESP32 service UUID
   String txUUID = "12345678-1234-5678-1234-56789abcdef1"; // ESP32 TX UUID
   String rxUUID = "12345678-1234-5678-1234-56789abcdef2"; // ESP32 RX UUID
 
   /// Start scanning for ESP32 devices
   Stream<List<DiscoveredDevice>> scanForDevices() async* {
     List<DiscoveredDevice> devices = [];
-    scanStream = _ble.scanForDevices(withServices: [], scanMode: ScanMode.lowLatency);
+    scanStream = _ble.scanForDevices(
+      withServices: [],
+      scanMode: ScanMode.lowLatency,
+      requireLocationServicesEnabled: false,
+    );
     await for (final device in scanStream) {
+      // Debug print to see what we're getting
+      print(
+          '📱 Found device: name="${device.name}", id=${device.id}, rssi=${device.rssi}');
+      print('   Services: ${device.serviceUuids}');
+
       if (!devices.any((d) => d.id == device.id)) {
         devices.add(device);
         yield devices;
@@ -32,7 +40,6 @@ class BluetoothService {
   Future<void> connectToDevice(DiscoveredDevice device) async {
     await _ble.connectToDevice(id: device.id).first;
     isConnected = true;
-    
 
     // Define the read and write characteristics
     txCharacteristic = QualifiedCharacteristic(
@@ -46,13 +53,13 @@ class BluetoothService {
       characteristicId: Uuid.parse(rxUUID),
       deviceId: device.id,
     );
-    
   }
 
   /// Send data to ESP32
   Future<void> sendData(String data) async {
     if (isConnected) {
-      await _ble.writeCharacteristicWithResponse(txCharacteristic, value: data.codeUnits);
+      await _ble.writeCharacteristicWithResponse(txCharacteristic,
+          value: data.codeUnits);
     }
   }
 

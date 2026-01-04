@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tapon_vending/connect_to_machine/connect_to_machine.dart';
+import 'package:tapon_vending/connect_to_machine.dart';
 import 'package:tapon_vending/home/home_view.dart';
 
 class LoginViewModel extends ChangeNotifier {
@@ -34,6 +34,14 @@ class LoginViewModel extends ChangeNotifier {
       return;
     }
 
+    // Basic validation: require an email for email/password sign-in
+    if (!emailOrMobile.contains('@')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter a valid email address.")),
+      );
+      return;
+    }
+
     try {
       isLoading = true;
       notifyListeners();
@@ -52,21 +60,54 @@ class LoginViewModel extends ChangeNotifier {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ConnectToMachine ()),
+        MaterialPageRoute(builder: (context) => ConnectToMachinePage()),
       );
     } on FirebaseAuthException catch (e) {
       isLoading = false;
       notifyListeners();
 
-      String errorMessage = "An error occurred";
-      if (e.code == 'user-not-found') {
-        errorMessage = "No user found with this email.";
-      } else if (e.code == 'wrong-password') {
-        errorMessage = "Incorrect password.";
+      String errorMessage;
+      switch (e.code) {
+        case 'invalid-email':
+          errorMessage = 'The email address is not valid.';
+          break;
+        case 'user-disabled':
+          errorMessage = 'This account has been disabled. Contact support.';
+          break;
+        case 'user-not-found':
+          errorMessage = 'No account found for this email.';
+          break;
+        case 'wrong-password':
+          errorMessage = 'The password is incorrect. Try again.';
+          break;
+        case 'too-many-requests':
+          errorMessage = 'Too many attempts. Please try again later.';
+          break;
+        case 'network-request-failed':
+          errorMessage = 'Network error. Check your connection and try again.';
+          break;
+        case 'operation-not-allowed':
+          errorMessage = 'This sign-in method is not enabled for your account.';
+          break;
+        default:
+          errorMessage = 'Unable to sign in. Please try again.';
       }
+
+      // Log for debugging
+      // ignore: avoid_print
+      print('Login error (${e.code}): ${e.message}');
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(errorMessage)),
+      );
+    } catch (e) {
+      isLoading = false;
+      notifyListeners();
+      // ignore: avoid_print
+      print('Unexpected login error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Something went wrong. Please try again.')),
       );
     }
   }

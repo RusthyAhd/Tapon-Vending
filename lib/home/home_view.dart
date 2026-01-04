@@ -105,56 +105,43 @@ class _HomePageState extends State<HomePage> {
 
                   return Padding(
                     padding: EdgeInsets.all(10),
-                    child: Expanded(
-                      child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 0.6, // Adjusted aspect ratio
-                        ),
-                        itemCount: viewModel.products.length,
-                        itemBuilder: (context, index) {
-                          
-                          // return Card(
-                          //   color: Colors.white,
-                          //   shape: RoundedRectangleBorder(
-                          //       borderRadius: BorderRadius.circular(10)),
-                          //   margin: EdgeInsets.symmetric(vertical: 5),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        // Compute number of columns based on available width
+                        int crossAxis = (constraints.maxWidth ~/ 180);
+                        if (crossAxis < 2) crossAxis = 2;
+                        if (crossAxis > 4)
+                          crossAxis = 4; // limit for large screens
 
-                          // child: ListTile(
-                          //   title: Text(
-                          //     product.name,
-                          //     style: TextStyle(fontWeight: FontWeight.bold),
-                          //   ),
-                          //   subtitle: Column(
-                          //     crossAxisAlignment: CrossAxisAlignment.start,
-                          //     children: [
-                          //       Text(
-                          //           "Price Before Discount: \$${product.priceBefore}"),
-                          //       Text(
-                          //           "Price After Discount: \$${product.priceAfter}"),
-                          //     ],
-                          //   ),
-                          // ),
-                          return ProductTile(
-                              product: viewModel.products[index]);
-                        },
-                      ),
-                      
+                        // Estimate child height to produce a reasonable aspect ratio
+                        final tileWidth = constraints.maxWidth / crossAxis;
+                        final estimatedTileHeight =
+                            220; // adjust if your ProductTile height changes
+                        final childAspectRatio =
+                            tileWidth / estimatedTileHeight;
+
+                        return GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxis,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: childAspectRatio,
+                          ),
+                          itemCount: viewModel.products.length,
+                          itemBuilder: (context, index) {
+                            return ProductTile(
+                                product: viewModel.products[index]);
+                          },
+                        );
+                      },
                     ),
-                    
                   );
-                  
                 },
-                
               ),
-              
             ),
-            
           ],
         ),
-        
         bottomNavigationBar: CustomBottomNavBar(
           selectedIndex: _selectedIndex,
           onItemTapped: _onItemTapped,
