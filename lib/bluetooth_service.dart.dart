@@ -1,4 +1,5 @@
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'dart:convert';
 
 class BluetoothService {
   // Singleton instance
@@ -82,13 +83,16 @@ class BluetoothService {
   Future<void> sendData(String data) async {
     print('📡 SENDING DATA TO DEVICE...');
     print('   Data: "$data"');
+    print('   Encoding: UTF-8');
     print('   Connection Status: $isConnected');
     
     if (isConnected) {
       try {
+        // Convert to UTF-8 bytes for better interoperability
+        List<int> bytes = utf8.encode(data);
         await _ble.writeCharacteristicWithResponse(txCharacteristic,
-            value: data.codeUnits);
-        print('✅ DATA SENT SUCCESSFULLY\n');
+            value: bytes);
+        print('✅ DATA SENT SUCCESSFULLY (${bytes.length} bytes)\n');
       } catch (e) {
         print('❌ ERROR SENDING DATA: $e\n');
       }
@@ -106,8 +110,9 @@ class BluetoothService {
     print('   Connection Status: ${isConnected ? '✅ CONNECTED' : '❌ DISCONNECTED'}');
     
     if (isConnected) {
-      String slotCommand = 'SLOT:$slotId'; // Format: SLOT:1, SLOT:2, etc.
-      print('   Command: $slotCommand');
+      // Send format: SLOT:3\n (with newline terminator for robust parsing)
+      String slotCommand = 'SLOT:$slotId\n';
+      print('   Command: "${slotCommand.replaceAll('\n', '\\n')}"');
       await sendData(slotCommand);
     } else {
       print('❌ CANNOT TRANSMIT - Device not connected');
