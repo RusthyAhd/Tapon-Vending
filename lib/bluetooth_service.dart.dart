@@ -1,6 +1,15 @@
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 class BluetoothService {
+  // Singleton instance
+  static final BluetoothService _instance = BluetoothService._internal();
+
+  factory BluetoothService() {
+    return _instance;
+  }
+
+  BluetoothService._internal();
+
   final FlutterReactiveBle _ble = FlutterReactiveBle();
   late Stream<DiscoveredDevice> scanStream;
   late QualifiedCharacteristic txCharacteristic;
@@ -17,6 +26,7 @@ class BluetoothService {
 
   /// Start scanning for ESP32 devices
   Stream<List<DiscoveredDevice>> scanForDevices() async* {
+    print('\n🔍 SCANNING FOR BLUETOOTH DEVICES...');
     List<DiscoveredDevice> devices = [];
     scanStream = _ble.scanForDevices(
       withServices: [],
@@ -25,12 +35,12 @@ class BluetoothService {
     );
     await for (final device in scanStream) {
       // Debug print to see what we're getting
-      print(
-          '📱 Found device: name="${device.name}", id=${device.id}, rssi=${device.rssi}');
-      print('   Services: ${device.serviceUuids}');
+     // print('📱 Found device: name="${device.name}", id=${device.id}, rssi=${device.rssi}');
+      //print('   Services: ${device.serviceUuids}');
 
       if (!devices.any((d) => d.id == device.id)) {
         devices.add(device);
+        print('   ✅ Device added to list (Total: ${devices.length})');
         yield devices;
       }
     }
@@ -38,28 +48,71 @@ class BluetoothService {
 
   /// Connect to a selected device
   Future<void> connectToDevice(DiscoveredDevice device) async {
-    await _ble.connectToDevice(id: device.id).first;
-    isConnected = true;
+    try {
+      print('\n🔗 CONNECTING TO DEVICE: ${device.name}');
+      print('   Device ID: ${device.id}');
+      
+      await _ble.connectToDevice(id: device.id).first;
+      isConnected = true;
 
-    // Define the read and write characteristics
-    txCharacteristic = QualifiedCharacteristic(
-      serviceId: Uuid.parse(serviceUUID),
-      characteristicId: Uuid.parse(txUUID),
-      deviceId: device.id,
-    );
+      print('✅ DEVICE CONNECTED SUCCESSFULLY');
+      print('   Connection Status: $isConnected\n');
 
-    rxCharacteristic = QualifiedCharacteristic(
-      serviceId: Uuid.parse(serviceUUID),
-      characteristicId: Uuid.parse(rxUUID),
-      deviceId: device.id,
-    );
+      // Define the read and write characteristics
+      txCharacteristic = QualifiedCharacteristic(
+        serviceId: Uuid.parse(serviceUUID),
+        characteristicId: Uuid.parse(txUUID),
+        deviceId: device.id,
+      );
+
+      rxCharacteristic = QualifiedCharacteristic(
+        serviceId: Uuid.parse(serviceUUID),
+        characteristicId: Uuid.parse(rxUUID),
+        deviceId: device.id,
+      );
+      
+      print('📡 TX/RX Characteristics configured\n');
+    } catch (e) {
+      print('❌ CONNECTION FAILED: $e');
+      isConnected = false;
+    }
   }
 
   /// Send data to ESP32
   Future<void> sendData(String data) async {
+    print('📡 SENDING DATA TO DEVICE...');
+    print('   Data: "$data"');
+    print('   Connection Status: $isConnected');
+    
     if (isConnected) {
-      await _ble.writeCharacteristicWithResponse(txCharacteristic,
-          value: data.codeUnits);
+      try {
+        await _ble.writeCharacteristicWithResponse(txCharacteristic,
+            value: data.codeUnits);
+        print('✅ DATA SENT SUCCESSFULLY\n');
+      } catch (e) {
+        print('❌ ERROR SENDING DATA: $e\n');
+      }
+    } else {
+      print('❌ NOT CONNECTED - Cannot send data\n');
+    }
+  }
+
+  /// Send slot ID to vending machine
+  Future<void> sendSlotId(int slotId) async {
+    print('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    print('🎯 BLUETOOTH TRANSMISSION - SLOT ID');
+    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    print('   Slot ID: $slotId');
+    print('   Connection Status: ${isConnected ? '✅ CONNECTED' : '❌ DISCONNECTED'}');
+    
+    if (isConnected) {
+      String slotCommand = 'SLOT:$slotId'; // Format: SLOT:1, SLOT:2, etc.
+      print('   Command: $slotCommand');
+      await sendData(slotCommand);
+    } else {
+      print('❌ CANNOT TRANSMIT - Device not connected');
+      print('   Please ensure vending machine is connected via Bluetooth');
+      print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
     }
   }
 
@@ -70,7 +123,9 @@ class BluetoothService {
 
   /// Disconnect from the device
   void disconnect() {
+    print('\n🔌 DISCONNECTING FROM DEVICE...');
     _ble.deinitialize();
     isConnected = false;
+    print('✅ DISCONNECTED\n');
   }
 }
