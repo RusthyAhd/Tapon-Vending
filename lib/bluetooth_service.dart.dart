@@ -23,14 +23,14 @@ class BluetoothService {
   String serviceUUID =
       "12345678-1234-5678-1234-56789abcdef0"; // Change to your ESP32 service UUID
   String txUUID = "12345678-1234-5678-1234-56789abcdef1"; // ESP32 TX UUID
-  String rxUUID = "12345678-1234-5678-1234-56789abcdef2"; // ESP32 RX UUID
+  String rxUUID = "abcd0002-1111-2222-3333-abcdefabcdef"; // ESP32 RX UUID
 
   /// Start scanning for ESP32 devices
   Stream<List<DiscoveredDevice>> scanForDevices() async* {
     print('\n🔍 SCANNING FOR BLUETOOTH DEVICES...');
     List<DiscoveredDevice> devices = [];
     scanStream = _ble.scanForDevices(
-      withServices: [],
+      withServices: [Uuid.parse(serviceUUID)],
       scanMode: ScanMode.lowLatency,
       requireLocationServicesEnabled: false,
     );
@@ -53,13 +53,21 @@ class BluetoothService {
     print('\n🔗 CONNECTING TO DEVICE: ${device.name}');
     print('   Device ID: ${device.id}');
 
-    await _ble.connectToDevice(id: device.id).first;
+    _ble.connectToDevice(id: device.id).listen((connectionState) {
+  print("Connection state: $connectionState");
+});
     isConnected = true;
 
     print('✅ DEVICE CONNECTED SUCCESSFULLY');
 
     // 🔥 REQUIRED: Discover services
     final services = await _ble.discoverServices(device.id);
+    for (final service in services) {
+  print("Service found: ${service.serviceId}");
+  for (final char in service.characteristics) {
+    print("  Characteristic: ${char.characteristicId}");
+  }
+}
     print('🧠 SERVICES DISCOVERED: ${services.length}');
 
     txCharacteristic = QualifiedCharacteristic(
