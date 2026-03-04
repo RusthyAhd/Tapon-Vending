@@ -1,0 +1,50 @@
+#include "BluetoothSerial.h"
+#define STEP_PIN 16
+#define DIR_PIN 17
+
+const int stepsPerRevolution =200;
+const int ledPin = 2;
+
+BluetoothSerial SerialBT;
+
+void setup() {
+  pinMode(STEP_PIN, OUTPUT);
+  pinMode(DIR_PIN, OUTPUT);
+  digitalWrite(DIR_PIN, HIGH); // direction
+  SerialBT.begin("Tapon_VendingBT");
+  Serial.println("Bluetooth started. Pair with Tapon_VendingBT");
+}
+
+void loop() {
+   motorFunction();
+}
+
+void motorFunction(){
+    if (SerialBT.available()) {
+    char command = SerialBT.read();
+    Serial.println(command);
+
+    if (command == '1') {
+      digitalWrite(STEP_PIN, HIGH);
+      delayMicroseconds(1000);
+      digitalWrite(STEP_PIN, LOW);
+      delayMicroseconds(1000);
+      SerialBT.println("LED ON");
+    }
+    delay(1000);
+
+    digitalWrite(DIR_PIN,LOW);
+    
+    if (command == '2') {
+      digitalWrite(STEP_PIN, HIGH);
+      delayMicroseconds(1000);
+      digitalWrite(STEP_PIN, LOW);
+      delayMicroseconds(1000);
+      SerialBT.println("LED ON");
+    }
+      delay(1000);
+      digitalWrite(DIR_PIN, HIGH);
+   }
+}
+
+      
