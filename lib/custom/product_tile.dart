@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tapon_vending/custom/confirmation_dialog.dart';
 import 'package:tapon_vending/home/product_model.dart';
+import 'package:tapon_vending/bluetooth_service.dart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -24,12 +25,12 @@ class ProductTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Price Before: Rs. ${product.priceBefore.toStringAsFixed(2)}',
+              'Original Price: Rs. ${product.priceBefore.toStringAsFixed(2)}',
               style: TextStyle(
                   decoration: TextDecoration.lineThrough, color: Colors.red),
             ),
             Text(
-              'Price After: Rs. ${product.priceAfter.toStringAsFixed(2)}',
+              'Final Price: Rs. ${product.priceAfter.toStringAsFixed(2)}',
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
             ),
@@ -37,10 +38,30 @@ class ProductTile extends StatelessWidget {
         ),
         trailing: Icon(Icons.shopping_cart, color: Colors.black54),
         onTap: () {
+          print('═' * 60);
+          print('✓ PRODUCT SELECTED: ${product.name}');
+          print('  • Slot ID: ${product.slotId}');
+          print('  • Price: Rs. ${product.priceAfter.toStringAsFixed(2)}');
+          print('═' * 60);
+          
           showConfirmationDialog(context, product.name, () async {
+            print('\n📋 PURCHASE CONFIRMATION DIALOG SHOWN');
             bool orderConfirmed = await handlePurchase(context, product);
+            
             if (orderConfirmed) {
+              print('\n✅ PURCHASE CONFIRMED');
+              print('  • Product: ${product.name}');
+              print('  • Slot ID: ${product.slotId}');
+              print('  • Status: Processing Bluetooth transmission...\n');
+              
+              // Send slot ID to vending machine via Bluetooth
+              // Using singleton instance - maintains connection across the app
+              BluetoothService bluetoothService = BluetoothService();
+              await bluetoothService.sendSlotId(product.slotId);
+              
               showSuccessDialog(context);
+            } else {
+              print('\n❌ PURCHASE FAILED OR CANCELLED');
             }
           });
         },
@@ -50,8 +71,11 @@ class ProductTile extends StatelessWidget {
 
   Future<bool> handlePurchase(BuildContext context, ProductModel product) async {
     try {
+      print('💳 INITIATING PURCHASE PROCESS...');
+      
       // Get the current user's ID
       String userId = FirebaseAuth.instance.currentUser!.uid;
+      print('  • User ID: ${userId.substring(0, 8)}...');
 
       // Fetch the current balance from Firebase
       DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -61,10 +85,16 @@ class ProductTile extends StatelessWidget {
       double currentBalance = userDoc['balance']
           .toDouble(); // Assuming balance is stored as a double
 
+      print('  • Current Balance: Rs. $currentBalance');
+      print('  • Required Amount: Rs. ${product.priceAfter}');
+
       // Check if user has enough balance
       if (currentBalance >= product.priceAfter) {
         // Deduct the amount from the balance
         double newBalance = currentBalance - product.priceAfter;
+
+        print('  • New Balance after deduction: Rs. $newBalance');
+        print('  • Updating Firebase...');
 
         // Update the balance in Firebase
         await FirebaseFirestore.instance
@@ -74,14 +104,17 @@ class ProductTile extends StatelessWidget {
           'balance': newBalance,
         });
 
+        print('✅ PURCHASE SUCCESSFUL - Balance Updated in Firebase');
         return true; // Purchase was successful
       } else {
         // Show an error if balance is insufficient
+        print('❌ INSUFFICIENT BALANCE');
+        print('  • Balance Needed: Rs. ${product.priceAfter - currentBalance}');
         showErrorDialog(context);
         return false; // Not enough balance
       }
     } catch (e) {
-      print('Error during purchase: $e');
+      print('❌ ERROR DURING PURCHASE: $e');
       return false; // Something went wrong
     }
   }
@@ -90,12 +123,14 @@ class ProductTile extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) {
+        print('✨ SUCCESS DIALOG DISPLAYED - Vending machine should now dispense product');
         return AlertDialog(
           title: Text("Success"),
-          content: Text("Your purchase was successful!"),
+          content: Text("Your purchase was successful! Product dispensing..."),
           actions: [
             TextButton(
               onPressed: () {
+                print('📍 User closed success dialog\n');
                 Navigator.pop(context); // Close the dialog
               },
               child: Text("OK"),

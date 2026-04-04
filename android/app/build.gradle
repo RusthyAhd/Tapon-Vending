@@ -26,7 +26,7 @@ android {
         
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdkVersion 23  // ✅ Updated to match Firebase requirements
+        minSdkVersion flutter.minSdkVersion  // ✅ Updated to match Firebase requirements
         targetSdkVersion 33
         compileSdkVersion 34  // ✅ Ensured compatibility with latest SDK
 
