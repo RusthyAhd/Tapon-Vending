@@ -57,7 +57,7 @@ class LoginPage extends StatelessWidget {
                     child: Container(
                       width: constraints.maxWidth * 0.55,
                       height: constraints.maxHeight * 0.27,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Color.fromRGBO(1, 192, 135, 0.52),
                         borderRadius: BorderRadius.only(
                           bottomRight: Radius.circular(130),
@@ -78,7 +78,7 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          Align(
+                          const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               'Enter email or mobile number',
@@ -92,7 +92,7 @@ class LoginPage extends StatelessWidget {
                             controller: emailController,
                           ),
                           const SizedBox(height: 10),
-                          Align(
+                          const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               'Enter password',
@@ -115,7 +115,7 @@ class LoginPage extends StatelessWidget {
                                   Switch(
                                     value: viewModel.rememberMe,
                                     onChanged: viewModel.toggleRememberMe,
-                                    activeColor: Color.fromRGBO(1, 181, 1, 1),
+                                    activeColor: const Color.fromRGBO(1, 181, 1, 1),
                                   ),
                                   const Text(
                                     "Remember Me",
@@ -143,7 +143,7 @@ class LoginPage extends StatelessWidget {
                           Container(
                             height: 55,
                             decoration: BoxDecoration(
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: [
                                   Color.fromRGBO(1, 181, 1, 1),
                                   Color.fromRGBO(1, 135, 95, 1),
@@ -198,11 +198,11 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          Row(
+                          const Row(
                             children: [
                               Expanded(child: Divider(color: Colors.white)),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                                padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Text("Or", style: TextStyle(color: Colors.white)),
                               ),
                               Expanded(child: Divider(color: Colors.white)),
@@ -211,8 +211,8 @@ class LoginPage extends StatelessWidget {
                           const SizedBox(height: 10),
                           OutlinedButton.icon(
                             style: OutlinedButton.styleFrom(
-                              minimumSize: Size(double.infinity, 40),
-                              backgroundColor: Color.fromRGBO(22, 22, 22, 1).withOpacity(0.9),
+                              minimumSize: const Size(double.infinity, 40),
+                              backgroundColor: const Color.fromRGBO(22, 22, 22, 1).withOpacity(0.9),
                               foregroundColor: Colors.white,
                               side: const BorderSide(color: Color.fromRGBO(43, 45, 51, 1)),
                             ),

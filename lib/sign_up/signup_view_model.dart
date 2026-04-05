@@ -150,21 +150,21 @@ class SignupViewModel extends ChangeNotifier {
   Future<void> signup(BuildContext context) async {
     if (!agreeToTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please agree to the terms and conditions")),
+        const SnackBar(content: Text("Please agree to the terms and conditions")),
       );
       return;
     }
 
     if (email.isEmpty || password.isEmpty || name.isEmpty || mobile.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("All fields are required")),
+        const SnackBar(content: Text("All fields are required")),
       );
       return;
     }
 
     if (!isValidEmail(email)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter a valid email address")),
+        const SnackBar(content: Text("Please enter a valid email address")),
       );
       return;
     }
@@ -191,13 +191,15 @@ class SignupViewModel extends ChangeNotifier {
           "balance": 0, // Initial balance set to zero
         });
 
+        if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Signup Successful")),
+          const SnackBar(content: Text("Signup Successful")),
         );
 
         print("User signed up successfully: ${user.uid}");
 
-       Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
       }
     } on FirebaseAuthException catch (e) {
       print("FirebaseAuthException: ${e.code} - ${e.message}");

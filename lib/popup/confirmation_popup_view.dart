@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'confirmation_view_model.dart';
 
 class ConfirmationPopup extends StatelessWidget {
-  ConfirmationPopup({Key? key}) : super(key: key);
+  ConfirmationPopup({super.key});
 
   final ConfirmationViewModel viewModel = Get.put(ConfirmationViewModel());
 
