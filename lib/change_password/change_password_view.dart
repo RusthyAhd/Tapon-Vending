@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tapon_vending/change_password/change_password_view_model.dart';
 
 class ChangePasswordView extends StatelessWidget {
-  const ChangePasswordView({super.key});
+  const ChangePasswordView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ChangePasswordView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Change your password', style: TextStyle(color: Colors.white)),
+                  Text('Change your password', style: TextStyle(color: Colors.white)),
                    const SizedBox(height: 16),
                   _buildPasswordField(
                     context: context,
@@ -59,12 +59,12 @@ class ChangePasswordView extends StatelessWidget {
                   //   ),
                   //   child: const Text('Update'),
                   // ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30),
                   Center(
                     child: Container(
                                   height: 55, // Added width to the button
                                   decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
+                                    gradient: LinearGradient(
                                     colors: [ Color.fromRGBO(1, 181, 1, 1), Color.fromRGBO(1, 135, 95, 1)],
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
@@ -78,7 +78,7 @@ class ChangePasswordView extends StatelessWidget {
                                     ),
                                     onPressed: () {
                                     },
-                                    child: const Text("Update", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18)),
+                                    child: Text("Update", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18)),
                                   ),
                                   ),),
                 ],
@@ -114,9 +114,9 @@ class ChangePasswordView extends StatelessWidget {
   }
 
   Widget _buildRequirements() {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: const [
         Text("Requirements:", style: TextStyle(color: Colors.white)),
         Text("• Minimum of 8 characters", style: TextStyle(color: Colors.white)),
         Text("• At least one special character (@!#\$%^&*)", style: TextStyle(color: Colors.white)),

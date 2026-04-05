@@ -42,7 +42,7 @@ class PaymentViewModel extends ChangeNotifier {
   notifyListeners();
 }
 
-  final List<PaymentMethod> _methods = [
+  List<PaymentMethod> _methods = [
     PaymentMethod(type: "Credit Card", lastFourDigits: "1234", logo: "assets/images/image2.png"),
     PaymentMethod(type: "Visa", lastFourDigits: "5678", logo: "assets/images/visa.png"),
   ];

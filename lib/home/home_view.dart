@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tapon_vending/bluetooth_service.dart.dart';
+import 'package:tapon_vending/connect_to_machine.dart';
 import 'package:tapon_vending/custom/custom_bottom_nav_bar.dart';
 import 'package:tapon_vending/custom/product_tile.dart';
 import 'package:tapon_vending/home/home_view_model.dart';
@@ -7,8 +10,6 @@ import 'package:tapon_vending/payment_method/payment_view.dart';
 import 'package:tapon_vending/profile/profile_view.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -27,14 +28,12 @@ class _HomePageState extends State<HomePage> {
       case 0:
         break;
       case 1:
-        if (!context.mounted) return;
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const PaymentPage()));
+            context, MaterialPageRoute(builder: (context) => PaymentPage()));
         break;
       case 2:
-        if (!context.mounted) return;
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const EditProfilePage()));
+            MaterialPageRoute(builder: (context) => EditProfilePage()));
         break;
     }
   }
@@ -67,7 +66,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 width: 220,
                 height: 190,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Color.fromRGBO(1, 192, 135, 0.52),
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(130),
@@ -82,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, viewModel, child) {
                   return Text(
                     "Hi, ${viewModel.userName.isNotEmpty ? viewModel.userName : 'Guest'}!",
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -105,19 +104,18 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   return Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
                     child: LayoutBuilder(
                       builder: (context, constraints) {
                         // Compute number of columns based on available width
                         int crossAxis = (constraints.maxWidth ~/ 180);
                         if (crossAxis < 2) crossAxis = 2;
-                        if (crossAxis > 4) {
+                        if (crossAxis > 4)
                           crossAxis = 4; // limit for large screens
-                        }
 
                         // Estimate child height to produce a reasonable aspect ratio
                         final tileWidth = constraints.maxWidth / crossAxis;
-                        const estimatedTileHeight =
+                        final estimatedTileHeight =
                             220; // adjust if your ProductTile height changes
                         final childAspectRatio =
                             tileWidth / estimatedTileHeight;

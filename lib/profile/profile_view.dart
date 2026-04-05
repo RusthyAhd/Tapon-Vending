@@ -7,8 +7,6 @@ import 'package:tapon_vending/payment_method/payment_view.dart';
 import 'package:tapon_vending/profile/profile_view_model.dart';
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
-
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
@@ -46,7 +44,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           return Scaffold(
             backgroundColor: Colors.black,
             body: viewModel.isLoading
-                ? const Center(child: CircularProgressIndicator(color: Colors.green))
+                ? Center(child: CircularProgressIndicator(color: Colors.green))
                 : Stack(
                     children: [
                       Positioned(
@@ -69,7 +67,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: Container(
                           width: 220,
                           height: 190,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: Color.fromRGBO(1, 192, 135, 0.52),
                             borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(130),
@@ -81,7 +79,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Positioned(
                         top: 80,
                         left: (MediaQuery.of(context).size.width - 200) / 2,
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             "EDIT PROFILE",
                             style: TextStyle(
@@ -97,47 +95,47 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 150),
+                            SizedBox(height: 150),
                             // Name Field
-                            const Text("Name", style: TextStyle(color: Colors.white)),
+                            Text("Name", style: TextStyle(color: Colors.white)),
                             TextField(
                               controller: viewModel.nameController,
                               decoration: _inputDecoration("Enter your name"),
-                              style: const TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.white),
                             ),
-                            const SizedBox(height: 10),
+                            SizedBox(height: 10),
 
                             // Email Field
-                            const Text("Email",
+                            Text("Email",
                                 style: TextStyle(color: Colors.white)),
                             TextField(
                               controller: viewModel.emailController,
                               decoration: _inputDecoration("Enter your email"),
-                              style: const TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.white),
                             ),
-                            const SizedBox(height: 10),
+                            SizedBox(height: 10),
 
                             // Mobile Field
-                            const Text("Mobile",
+                            Text("Mobile",
                                 style: TextStyle(color: Colors.white)),
                             TextField(
                               controller: viewModel.mobileController,
                               decoration: _inputDecoration("Enter your number"),
-                              style: const TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.white),
                             ),
-                            const SizedBox(height: 10),
+                            SizedBox(height: 10),
 // Display Balance
                             Text(
-                                "Balance: Rs.${viewModel.balance.toStringAsFixed(2)}",
-                                style: const TextStyle(
+                                "Balance: \Rs.${viewModel.balance.toStringAsFixed(2)}",
+                                style: TextStyle(
                                     color: Colors.white, fontSize: 16)),
 
-                            const SizedBox(height: 10),
+                            SizedBox(height: 10),
                             // Password Section
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text("Password",
+                                Text("Password",
                                     style: TextStyle(color: Colors.white)),
                                 TextButton(
                                   onPressed: () {
@@ -145,21 +143,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const ChangePasswordView())); // Implement Change Password logic
+                                                ChangePasswordView())); // Implement Change Password logic
                                   },
-                                  child: const Text("Change",
+                                  child: Text("Change",
                                       style: TextStyle(color: Colors.green)),
                                 ),
                               ],
                             ),
 
                             // Save Button
-                            const Spacer(),
+                            Spacer(),
                             Center(
                               child: Container(
                                 height: 50, // Added width to the button
                                 decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
+                                  gradient: LinearGradient(
                                     colors: [
                                       Color.fromRGBO(1, 181, 1, 1),
                                       Color.fromRGBO(1, 135, 95, 1)
@@ -184,7 +182,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                               "Your profile details updated")),
                                     );
                                   },
-                                  child: const Text("Save",
+                                  child: Text("Save",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -210,15 +208,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
   InputDecoration _inputDecoration(String hint) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: const TextStyle(color: Colors.white70),
+      hintStyle: TextStyle(color: Colors.white70),
       filled: true,
       fillColor: Colors.black,
       enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.white),
+        borderSide: BorderSide(color: Colors.white),
         borderRadius: BorderRadius.circular(10),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.green),
+        borderSide: BorderSide(color: Colors.green),
         borderRadius: BorderRadius.circular(10),
       ),
     );

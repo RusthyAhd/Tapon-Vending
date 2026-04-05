@@ -15,8 +15,10 @@ class ConfirmationViewModel extends GetxController {
 
   void onConfirm() {
     // Call the callback function when confirmed
-    onConfirmCallback();
+    if (onConfirmCallback != null) {
+      onConfirmCallback();
     }
+  }
 
   void onCancel() {
     Get.back(result: false);

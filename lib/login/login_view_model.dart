@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tapon_vending/connect_to_machine.dart';
+import 'package:tapon_vending/home/home_view.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -53,14 +54,13 @@ class LoginViewModel extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
 
-      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Login Successful")),
       );
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const ConnectToMachinePage()),
+        MaterialPageRoute(builder: (context) => ConnectToMachinePage()),
       );
     } on FirebaseAuthException catch (e) {
       isLoading = false;

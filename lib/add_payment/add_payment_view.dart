@@ -3,23 +3,21 @@ import 'package:provider/provider.dart';
 import 'add_payment_view_model.dart';
 
 class AddPaymentPage extends StatelessWidget {
-  const AddPaymentPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => AddPaymentViewModel(),
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
+        backgroundColor: Color.fromRGBO(13, 13, 13, 1),
         appBar: AppBar(
             leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.of(context).pop();
             },
             ),
-          backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
-          title: const Center(
+          backgroundColor: Color.fromRGBO(13, 13, 13, 1),
+          title: Center(
             child: Text("Add Payment Method",
                 style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1))),
           ),
@@ -32,11 +30,11 @@ class AddPaymentPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('Enter your payment details',
+                    Text('Enter your payment details',
                         textAlign: TextAlign.center,
                         style:
                             TextStyle(color: Color.fromRGBO(255, 255, 255, 1))),
-                    const Text('By continuing you agree to our Terms',
+                    Text('By continuing you agree to our Terms',
                         textAlign: TextAlign.center,
                         style:
                             TextStyle(color: Color.fromRGBO(255, 255, 255, 1))),
@@ -59,7 +57,7 @@ class AddPaymentPage extends StatelessWidget {
                                 alignment: Alignment.center,
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.all(8),
+                                    padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: isSelected
@@ -73,7 +71,7 @@ class AddPaymentPage extends StatelessWidget {
                                         width: 50, height: 50),
                                   ),
                                   if (isSelected)
-                                    const Positioned(
+                                    Positioned(
                                       top: -2,
                                       right: -2,
                                       child: Icon(Icons.check_circle,
@@ -88,7 +86,7 @@ class AddPaymentPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     // Cardholder Name
-                    const Align(
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: Text("Cardholder name",
                           style: TextStyle(color: Colors.white)),
@@ -96,7 +94,7 @@ class AddPaymentPage extends StatelessWidget {
                     TextField(
                       decoration: InputDecoration(
                         hintText: "John Henry",
-                        hintStyle: const TextStyle(
+                        hintStyle: TextStyle(
                             fontStyle: FontStyle.italic, color: Colors.white54),
                         filled: true,
                         fillColor: Colors.grey[900],
@@ -106,12 +104,12 @@ class AddPaymentPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
                     // Card Number
-                    const Align( alignment: Alignment.centerLeft,child: Text("Card Number", style: TextStyle(color: Colors.white))),
+                    Align( alignment: Alignment.centerLeft,child: Text("Card Number", style: TextStyle(color: Colors.white))),
                     TextField(
                       onChanged: viewModel.setCardNumber,
                       decoration: InputDecoration(
                         hintText: "**** **** **** 3947",
-                        hintStyle: const TextStyle(color: Colors.white54),
+                        hintStyle: TextStyle(color: Colors.white54),
                         filled: true,
                         fillColor: Colors.grey[900],
                         border: OutlineInputBorder(
@@ -128,7 +126,7 @@ class AddPaymentPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text("Exp Month",
+                              Text("Exp Month",
                                   style: TextStyle(color: Colors.white)),
                               DropdownButtonFormField(
                                 dropdownColor: Colors.black,
@@ -137,7 +135,7 @@ class AddPaymentPage extends StatelessWidget {
                                   return DropdownMenuItem(
                                     value: "${index + 1}".padLeft(2, '0'),
                                     child: Text("${index + 1}".padLeft(2, '0'),
-                                        style: const TextStyle(color: Colors.white)),
+                                        style: TextStyle(color: Colors.white)),
                                   );
                                 }),
                                 onChanged: (value) =>
@@ -157,7 +155,7 @@ class AddPaymentPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text("Exp Year",
+                              Text("Exp Year",
                                   style: TextStyle(color: Colors.white)),
                               DropdownButtonFormField(
                                 dropdownColor: Colors.black,
@@ -166,7 +164,7 @@ class AddPaymentPage extends StatelessWidget {
                                   return DropdownMenuItem(
                                     value: "${2024 + index}",
                                     child: Text("${2024 + index}",
-                                        style: const TextStyle(color: Colors.white)),
+                                        style: TextStyle(color: Colors.white)),
                                   );
                                 }),
                                 onChanged: (value) =>
@@ -186,12 +184,12 @@ class AddPaymentPage extends StatelessWidget {
                     const SizedBox(height: 15),
 
                     // CVC
-                    const Text("CVC", textAlign: TextAlign.left,style: TextStyle(color: Colors.white)),
+                    Text("CVC", textAlign: TextAlign.left,style: TextStyle(color: Colors.white)),
                     TextField(
                       onChanged: viewModel.setCVC,
                       decoration: InputDecoration(
                         hintText: "123",
-                        hintStyle: const TextStyle(color: Colors.white54),
+                        hintStyle: TextStyle(color: Colors.white54),
                         filled: true,
                         fillColor: Colors.grey[900],
                         border: OutlineInputBorder(
@@ -205,7 +203,7 @@ class AddPaymentPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Save card",
+                        Text("Save card",
                             style: TextStyle(color: Colors.white)),
                         Switch(value: false, onChanged: (value) {}),
                       ],
@@ -228,7 +226,7 @@ class AddPaymentPage extends StatelessWidget {
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                 content: Text("Please select a payment method"),
                                 backgroundColor: Colors.red,
                               ),
@@ -236,11 +234,11 @@ class AddPaymentPage extends StatelessWidget {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromRGBO(129, 143, 249, 1),
+                          backgroundColor: Color.fromRGBO(129, 143, 249, 1),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text("Add now",
+                        child: Text("Add now",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 16)),
                       ),

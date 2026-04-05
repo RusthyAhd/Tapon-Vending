@@ -40,7 +40,7 @@ class ForgotPasswordView extends StatelessWidget {
                 child: Container(
                   width: 220,
                   height: 190,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Color.fromRGBO(1, 192, 135, 0.52),
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(130),
@@ -59,21 +59,21 @@ class ForgotPasswordView extends StatelessWidget {
                         height: 200,
                         width: 200,
                       )),
-                      const SizedBox(height: 10),
-                      const Text('RESET PASSWORD',
+                      SizedBox(height: 10),
+                      Text('RESET PASSWORD',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 40,
                               fontWeight: FontWeight.bold)),
                       const SizedBox(height: 8),
-                      const Center(
+                      Center(
                           child: Text(
                         'Enter your email to reset your password',
                         style:
                             TextStyle(color: Color.fromRGBO(217, 217, 217, 1)),
                       )),
                       const SizedBox(height: 10),
-                      const Align(
+                      Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Email ',
@@ -88,7 +88,7 @@ class ForgotPasswordView extends StatelessWidget {
                       Container(
                         height: 55, // Added width to the button
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
+                          gradient: LinearGradient(
                             colors: [
                               Color.fromRGBO(1, 181, 1, 1),
                               Color.fromRGBO(1, 135, 95, 1)
@@ -100,7 +100,7 @@ class ForgotPasswordView extends StatelessWidget {
                         ),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 40),
+                            minimumSize: Size(double.infinity, 40),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 15),
                             backgroundColor: Colors.transparent,
@@ -123,7 +123,7 @@ class ForgotPasswordView extends StatelessWidget {
                       const SizedBox(height: 50),
                       const Divider(color: Colors.white),
                       const SizedBox(height: 20),
-                      const Text('Remember credentials? ',
+                      Text('Remember credentials? ',
                           style: TextStyle(color: Colors.white, fontSize: 16)),
                       GestureDetector(
                         onTap: () {
@@ -132,7 +132,7 @@ class ForgotPasswordView extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => LoginPage()));
                         },
-                        child: const Text('log in now',
+                        child: Text('log in now',
                             style: TextStyle(
                                 color: Color.fromRGBO(1, 181, 1, 1),
                                 fontSize: 16,

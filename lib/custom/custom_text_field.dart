@@ -12,16 +12,16 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: isPassword,
-      style: const TextStyle(color: Colors.white), // Set the text color to white
+      style: TextStyle(color: Colors.white), // Set the text color to white
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: Colors.white54), // Optional: Set hint text color to a lighter white
+        hintStyle: TextStyle(color: Colors.white54), // Optional: Set hint text color to a lighter white
         filled: true,
-        fillColor: const Color.fromRGBO(22, 22, 22, 1).withOpacity(0.9),
+        fillColor: Color.fromRGBO(22, 22, 22, 1).withOpacity(0.9),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.blue),
+          borderSide: BorderSide(color: Colors.blue),
         ),
       ),
     );

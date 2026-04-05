@@ -5,15 +5,15 @@ class CustomBottomNavBar extends StatelessWidget {
   final Function(int) onItemTapped;
 
   const CustomBottomNavBar({
-    super.key,
+    Key? key,
     required this.selectedIndex,
     required this.onItemTapped,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -29,12 +29,12 @@ class CustomBottomNavBar extends StatelessWidget {
       ),
       child: BottomNavigationBar(
         backgroundColor: Colors.transparent,
-        selectedItemColor: const Color.fromRGBO(1, 181, 1, 1),
+        selectedItemColor: Color.fromRGBO(1, 181, 1, 1),
         unselectedItemColor: Colors.white,
         currentIndex: selectedIndex,
         onTap: onItemTapped,
         elevation: 0,
-        items: const [
+        items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "HOME"),
           BottomNavigationBarItem(icon: Icon(Icons.history), label: "PAYMENT"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "PROFILE"),

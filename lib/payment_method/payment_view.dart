@@ -7,8 +7,6 @@ import 'package:tapon_vending/profile/profile_view.dart';
 import 'payment_view_model.dart';
 
 class PaymentPage extends StatefulWidget {
-  const PaymentPage({super.key});
-
   @override
   _PaymentPageState createState() => _PaymentPageState();
 }
@@ -66,7 +64,7 @@ class _PaymentPageState extends State<PaymentPage> {
               child: Container(
                 width: 220,
                 height: 190,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Color.fromRGBO(1, 192, 135, 0.52),
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(130),
@@ -77,7 +75,7 @@ class _PaymentPageState extends State<PaymentPage> {
             Positioned(
               top: 60,
               left: (MediaQuery.of(context).size.width - 150) / 2,
-              child: const Center(
+              child: Center(
                 // Wrap the Column with Center
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +109,7 @@ class _PaymentPageState extends State<PaymentPage> {
             ),
 
             // SizedBox for spacing
-            const Positioned.fill(
+            Positioned.fill(
               top: 350,
               child: Align(
                 alignment: Alignment.topCenter,
@@ -139,17 +137,17 @@ class _PaymentPageState extends State<PaymentPage> {
                                 fit: BoxFit.contain,
                               ),
                               title: Text(method.type,
-                                  style: const TextStyle(color: Colors.white)),
+                                  style: TextStyle(color: Colors.white)),
                               subtitle: Text("**** ${method.lastFourDigits}",
-                                  style: const TextStyle(color: Colors.white54)),
+                                  style: TextStyle(color: Colors.white54)),
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Text("Change",
+                                  Text("Change",
                                       style: TextStyle(color: Colors.green)),
                                   IconButton(
                                     icon:
-                                        const Icon(Icons.delete, color: Colors.white),
+                                        Icon(Icons.delete, color: Colors.white),
                                     onPressed: () {
                                       viewModel.removePaymentMethod(
                                           viewModel.methods.indexOf(method));
@@ -159,7 +157,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               ),
                             ),
                           );
-                        }),
+                        }).toList(),
                         const SizedBox(height: 20),
                         TextButton.icon(
                           onPressed: () {
@@ -168,8 +166,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                 MaterialPageRoute(
                                     builder: (context) => AddPaymentPage()));
                           },
-                          icon: const Icon(Icons.add, color: Colors.white),
-                          label: const Text("Add new method",
+                          icon: Icon(Icons.add, color: Colors.white),
+                          label: Text("Add new method",
                               style: TextStyle(color: Colors.white)),
                         ),
                       ],
@@ -190,8 +188,6 @@ class _PaymentPageState extends State<PaymentPage> {
 }
 
 class BalanceCard extends StatelessWidget {
-  const BalanceCard({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Consumer<PaymentViewModel>(
@@ -226,7 +222,7 @@ class BalanceCard extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               viewModel.isLoading
-                  ? const Center(child: CircularProgressIndicator(color: Colors.green))
+                  ? Center(child: CircularProgressIndicator(color: Colors.green))
                   : Text(
                       "${viewModel.balance.toStringAsFixed(2)} LkR",
                       style: TextStyle(

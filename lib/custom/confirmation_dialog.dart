@@ -7,7 +7,7 @@ Future<void> showConfirmationDialog(
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Confirm Order'),
+        title: Text('Confirm Order'),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
@@ -17,13 +17,13 @@ Future<void> showConfirmationDialog(
         ),
         actions: <Widget>[
           TextButton(
-            child: const Text('Cancel'),
+            child: Text('Cancel'),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           TextButton(
-            child: const Text('Confirm'),
+            child: Text('Confirm'),
             onPressed: () {
               onConfirm();
               Navigator.of(context).pop();
