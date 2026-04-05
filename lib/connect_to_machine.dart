@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-// import 'package:tapon_vending/bluetooth_service.dart.dart';
+// import 'package:tapon_vending/bluetooth_service.dart';
 
 // class ConnectToMachinePage extends StatefulWidget {
 //   @override
@@ -102,10 +102,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:tapon_vending/bluetooth_service.dart.dart';
+import 'package:tapon_vending/bluetooth_service.dart';
 import 'package:tapon_vending/home/home_view.dart';
 
 class ConnectToMachinePage extends StatefulWidget {
+  const ConnectToMachinePage({super.key});
+
   @override
   _ConnectToMachinePageState createState() => _ConnectToMachinePageState();
 }
@@ -136,7 +138,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
       print("✅ All permissions granted!");
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
             content: Text("Please grant Bluetooth and Location permissions!")),
       );
     }
@@ -147,7 +149,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
       print('BLE Status: $status');
       if (status == BleStatus.poweredOff) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Please turn on Bluetooth")),
+          const SnackBar(content: Text("Please turn on Bluetooth")),
         );
       }
     });
@@ -187,7 +189,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
     _stopScan();
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Connecting to device...")),
+      const SnackBar(content: Text("Connecting to device...")),
     );
 
     try {
@@ -239,10 +241,10 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
         backgroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Color.fromRGBO(5, 248, 175, 1)),
+          icon: const Icon(Icons.arrow_back, color: Color.fromRGBO(5, 248, 175, 1)),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
+        title: const Text(
           "Connect to Machine",
           style: TextStyle(
             color: Colors.white,
@@ -256,7 +258,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
         children: [
           // Header Section with status
           Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.black, Colors.grey[900]!],
@@ -269,16 +271,16 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                 Icon(
                   _isConnected ? Icons.check_circle : Icons.bluetooth_searching,
                   color: _isConnected
-                      ? Color.fromRGBO(5, 248, 175, 1)
+                      ? const Color.fromRGBO(5, 248, 175, 1)
                       : Colors.white70,
                   size: 60,
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Text(
                   _isConnected
                       ? "Connected to Vending Machine"
                       : "Searching for Vending Machines",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -286,16 +288,16 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                   textAlign: TextAlign.center,
                 ),
                 if (_isConnected && _connectedDeviceId != null) ...[
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     _connectedDeviceId!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white54,
                       fontSize: 12,
                     ),
                   ),
                 ],
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 // Scan Buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -309,14 +311,14 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                         ),
                         label: Text(
                           _isScanning ? "Stop Scan" : "Scan Devices",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(5, 248, 175, 1),
-                          padding: EdgeInsets.symmetric(
+                          backgroundColor: const Color.fromRGBO(5, 248, 175, 1),
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
@@ -328,8 +330,8 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                       ElevatedButton.icon(
                         onPressed: _disconnectFromDevice,
                         icon:
-                            Icon(Icons.bluetooth_disabled, color: Colors.white),
-                        label: Text(
+                            const Icon(Icons.bluetooth_disabled, color: Colors.white),
+                        label: const Text(
                           "Disconnect",
                           style: TextStyle(
                             color: Colors.white,
@@ -338,7 +340,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red[700],
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
@@ -356,8 +358,8 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
           // Scanning Indicator
           if (_isScanning)
             Container(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              child: Row(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
@@ -385,12 +387,12 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
           // Devices List Header
           if (_devices.isNotEmpty)
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               child: Row(
                 children: [
                   Text(
                     "Available Devices (${_devices.length})",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -403,7 +405,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
           // Devices List
           Expanded(
             child: _devices.isEmpty && !_isScanning
-                ? Center(
+                ? const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -432,7 +434,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                     ),
                   )
                 : ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: _devices.length,
                     itemBuilder: (context, index) {
                       final device = _devices[index];
@@ -443,7 +445,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                       final isStrongSignal = signalStrength > -70;
 
                       return Container(
-                        margin: EdgeInsets.only(bottom: 12),
+                        margin: const EdgeInsets.only(bottom: 12),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [Colors.grey[900]!, Colors.grey[850]!],
@@ -457,45 +459,45 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                           ),
                         ),
                         child: ListTile(
-                          contentPadding: EdgeInsets.all(16),
+                          contentPadding: const EdgeInsets.all(16),
                           leading: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: isStrongSignal
-                                  ? Color.fromRGBO(5, 248, 175, 0.2)
+                                  ? const Color.fromRGBO(5, 248, 175, 0.2)
                                   : Colors.orange.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
                               Icons.devices,
                               color: isStrongSignal
-                                  ? Color.fromRGBO(5, 248, 175, 1)
+                                  ? const Color.fromRGBO(5, 248, 175, 1)
                                   : Colors.orange,
                               size: 32,
                             ),
                           ),
                           title: Text(
                             deviceName,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
                           ),
                           subtitle: Padding(
-                            padding: EdgeInsets.only(top: 8),
+                            padding: const EdgeInsets.only(top: 8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.fingerprint,
+                                    const Icon(Icons.fingerprint,
                                         size: 14, color: Colors.white38),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Expanded(
                                       child: Text(
                                         device.id,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 11,
                                           color: Colors.white54,
                                         ),
@@ -504,7 +506,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Row(
                                   children: [
                                     Icon(
@@ -514,7 +516,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                                           ? Colors.green
                                           : Colors.orange,
                                     ),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Text(
                                       "$signalStrength dBm ${isStrongSignal ? '(Strong)' : '(Weak)'}",
                                       style: TextStyle(
@@ -529,15 +531,15 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                                 ),
                                 if (device.serviceUuids.isNotEmpty)
                                   Padding(
-                                    padding: EdgeInsets.only(top: 4),
+                                    padding: const EdgeInsets.only(top: 4),
                                     child: Row(
                                       children: [
-                                        Icon(Icons.settings_bluetooth,
+                                        const Icon(Icons.settings_bluetooth,
                                             size: 14, color: Colors.blue),
-                                        SizedBox(width: 4),
+                                        const SizedBox(width: 4),
                                         Text(
                                           "${device.serviceUuids.length} Services",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 11, color: Colors.blue),
                                         ),
                                       ],
@@ -558,16 +560,16 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromRGBO(5, 248, 175, 1),
+                              backgroundColor: const Color.fromRGBO(5, 248, 175, 1),
                               foregroundColor: Colors.black,
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: 3,
                             ),
-                            child: Text(
+                            child: const Text(
                               "Connect",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,

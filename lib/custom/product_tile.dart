@@ -1,42 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:tapon_vending/custom/confirmation_dialog.dart';
 import 'package:tapon_vending/home/product_model.dart';
-import 'package:tapon_vending/bluetooth_service.dart.dart';
+import 'package:tapon_vending/bluetooth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ProductTile extends StatelessWidget {
   final ProductModel product;
 
-  ProductTile({required this.product});
+  const ProductTile({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         title: Text(
           product.name,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Original Price: Rs. ${product.priceBefore.toStringAsFixed(2)}',
-              style: TextStyle(
+              style: const TextStyle(
                   decoration: TextDecoration.lineThrough, color: Colors.red),
             ),
             Text(
               'Final Price: Rs. ${product.priceAfter.toStringAsFixed(2)}',
               style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                  const TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
             ),
           ],
         ),
-        trailing: Icon(Icons.shopping_cart, color: Colors.black54),
+        trailing: const Icon(Icons.shopping_cart, color: Colors.black54),
         onTap: () {
           print('═' * 60);
           print('✓ PRODUCT SELECTED: ${product.name}');
@@ -125,15 +125,15 @@ class ProductTile extends StatelessWidget {
       builder: (context) {
         print('✨ SUCCESS DIALOG DISPLAYED - Vending machine should now dispense product');
         return AlertDialog(
-          title: Text("Success"),
-          content: Text("Your purchase was successful! Product dispensing..."),
+          title: const Text("Success"),
+          content: const Text("Your purchase was successful! Product dispensing..."),
           actions: [
             TextButton(
               onPressed: () {
                 print('📍 User closed success dialog\n');
                 Navigator.pop(context); // Close the dialog
               },
-              child: Text("OK"),
+              child: const Text("OK"),
             ),
           ],
         );
@@ -146,14 +146,14 @@ class ProductTile extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Error"),
-          content: Text("Insufficient balance. Please top up your account."),
+          title: const Text("Error"),
+          content: const Text("Insufficient balance. Please top up your account."),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
               },
-              child: Text("OK"),
+              child: const Text("OK"),
             ),
           ],
         );
