@@ -1,0 +1,2 @@
+D:/backup/Tapon-Vending/android/app/.cxx/RelWithDebInfo/6wp4u2y6/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/backup/Tapon-Vending/android/app/.cxx/RelWithDebInfo/6wp4u2y6/arm64-v8a/CMakeFiles/rebuild_cache.dir
