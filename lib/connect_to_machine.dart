@@ -117,6 +117,7 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
   bool _isScanning = false;
   bool _isConnected = false;
   String? _connectedDeviceId;
+  bool _disconnectOnDispose = true;
 
   @override
   void initState() {
@@ -227,7 +228,9 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
   @override
   void dispose() {
     _stopScan();
-    _disconnectFromDevice();
+    if (_disconnectOnDispose) {
+      _disconnectFromDevice();
+    }
     super.dispose();
   }
 
@@ -550,6 +553,8 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
                             onPressed: () async {
                               await _connectToDevice(device);
                               if (_isConnected) {
+                                // Keep BLE connection alive for HomePage purchases.
+                                _disconnectOnDispose = false;
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
