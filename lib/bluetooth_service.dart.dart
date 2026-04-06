@@ -1,5 +1,6 @@
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'dart:convert';
+import 'dart:async';
 
 class BluetoothService {
   // Singleton instance
@@ -15,6 +16,8 @@ class BluetoothService {
   late Stream<DiscoveredDevice> scanStream;
   late QualifiedCharacteristic txCharacteristic;
   late QualifiedCharacteristic rxCharacteristic;
+  StreamSubscription<ConnectionStateUpdate>? _connectionSubscription;
+  String? _connectedDeviceId;
 
   // Add this getter
   FlutterReactiveBle get ble => _ble;
@@ -49,14 +52,46 @@ class BluetoothService {
 
   /// Connect to a selected device
   Future<void> connectToDevice(DiscoveredDevice device) async {
-  try {
-    print('\n🔗 CONNECTING TO DEVICE: ${device.name}');
-    print('   Device ID: ${device.id}');
+    try {
+      print('\n🔗 CONNECTING TO DEVICE: ${device.name}');
+      print('   Device ID: ${device.id}');
 
-    _ble.connectToDevice(id: device.id).listen((connectionState) {
-  print("Connection state: $connectionState");
-});
-    isConnected = true;
+      // Cancel any previous connection stream before creating a new one.
+      await _connectionSubscription?.cancel();
+      _connectionSubscription = null;
+      _connectedDeviceId = null;
+
+      final completer = Completer<void>();
+      _connectionSubscription = _ble.connectToDevice(id: device.id).listen(
+        (update) {
+          if (update.connectionState == DeviceConnectionState.connected) {
+            isConnected = true;
+            _connectedDeviceId = device.id;
+            if (!completer.isCompleted) {
+              completer.complete();
+            }
+          } else if (update.connectionState == DeviceConnectionState.disconnected) {
+            isConnected = false;
+            _connectedDeviceId = null;
+            if (!completer.isCompleted) {
+              completer.completeError(Exception('Device disconnected during connect'));
+            }
+          }
+        },
+        onError: (Object error, StackTrace stackTrace) {
+          isConnected = false;
+          _connectedDeviceId = null;
+          if (!completer.isCompleted) {
+            completer.completeError(error, stackTrace);
+          }
+        },
+      );
+
+      await completer.future.timeout(
+        const Duration(seconds: 20),
+        onTimeout: () => throw TimeoutException('BLE connection timed out'),
+      );
+      isConnected = true;
 
     print('✅ DEVICE CONNECTED SUCCESSFULLY');
 
@@ -76,19 +111,22 @@ class BluetoothService {
       deviceId: device.id,
     );
 
-    rxCharacteristic = QualifiedCharacteristic(
-      serviceId: Uuid.parse(serviceUUID),
-      characteristicId: Uuid.parse(rxUUID),
-      deviceId: device.id,
-    );
-
-    print('📡 TX/RX Characteristics READY\n');
-  } catch (e) {
-    print('❌ CONNECTION FAILED: $e');
-    isConnected = false;
+      rxCharacteristic = QualifiedCharacteristic(
+        serviceId: Uuid.parse(serviceUUID),
+        characteristicId: Uuid.parse(rxUUID),
+        deviceId: device.id,
+      );
+      
+      print('📡 TX/RX Characteristics configured\n');
+    } catch (e) {
+      print('❌ CONNECTION FAILED: $e');
+      await _connectionSubscription?.cancel();
+      _connectionSubscription = null;
+      _connectedDeviceId = null;
+      isConnected = false;
+      rethrow;
+    }
   }
-}
-
 
   /// Send data to ESP32
 Future<void> sendData(String data) async {
@@ -130,7 +168,9 @@ Future<void> sendSlotId(int slotId) async {
   /// Disconnect from the device
   void disconnect() {
     print('\n🔌 DISCONNECTING FROM DEVICE...');
-    _ble.deinitialize();
+    _connectionSubscription?.cancel();
+    _connectionSubscription = null;
+    _connectedDeviceId = null;
     isConnected = false;
     print('✅ DISCONNECTED\n');
   }
