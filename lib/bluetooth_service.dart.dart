@@ -26,14 +26,14 @@ class BluetoothService {
   String serviceUUID =
       "12345678-1234-5678-1234-56789abcdef0"; // Change to your ESP32 service UUID
   String txUUID = "12345678-1234-5678-1234-56789abcdef1"; // ESP32 TX UUID
-  String rxUUID = "12345678-1234-5678-1234-56789abcdef2"; // ESP32 RX UUID
+  String rxUUID = "abcd0002-1111-2222-3333-abcdefabcdef"; // ESP32 RX UUID
 
   /// Start scanning for ESP32 devices
   Stream<List<DiscoveredDevice>> scanForDevices() async* {
     print('\n🔍 SCANNING FOR BLUETOOTH DEVICES...');
     List<DiscoveredDevice> devices = [];
     scanStream = _ble.scanForDevices(
-      withServices: [],
+      withServices: [Uuid.parse(serviceUUID)],
       scanMode: ScanMode.lowLatency,
       requireLocationServicesEnabled: false,
     );
@@ -93,15 +93,23 @@ class BluetoothService {
       );
       isConnected = true;
 
-      print('✅ DEVICE CONNECTED SUCCESSFULLY');
-      print('   Connection Status: $isConnected\n');
+    print('✅ DEVICE CONNECTED SUCCESSFULLY');
 
-      // Define the read and write characteristics
-      txCharacteristic = QualifiedCharacteristic(
-        serviceId: Uuid.parse(serviceUUID),
-        characteristicId: Uuid.parse(txUUID),
-        deviceId: device.id,
-      );
+    // 🔥 REQUIRED: Discover services
+    final services = await _ble.discoverServices(device.id);
+    for (final service in services) {
+  print("Service found: ${service.serviceId}");
+  for (final char in service.characteristics) {
+    print("  Characteristic: ${char.characteristicId}");
+  }
+}
+    print('🧠 SERVICES DISCOVERED: ${services.length}');
+
+    txCharacteristic = QualifiedCharacteristic(
+      serviceId: Uuid.parse(serviceUUID),
+      characteristicId: Uuid.parse(txUUID),
+      deviceId: device.id,
+    );
 
       rxCharacteristic = QualifiedCharacteristic(
         serviceId: Uuid.parse(serviceUUID),
@@ -121,46 +129,36 @@ class BluetoothService {
   }
 
   /// Send data to ESP32
-  Future<void> sendData(String data) async {
-    print('📡 SENDING DATA TO DEVICE...');
-    print('   Data: "$data"');
-    print('   Encoding: UTF-8');
-    print('   Connection Status: $isConnected');
-    
-    if (isConnected) {
-      try {
-        // Convert to UTF-8 bytes for better interoperability
-        List<int> bytes = utf8.encode(data);
-        await _ble.writeCharacteristicWithResponse(txCharacteristic,
-            value: bytes);
-        print('✅ DATA SENT SUCCESSFULLY (${bytes.length} bytes)\n');
-      } catch (e) {
-        print('❌ ERROR SENDING DATA: $e\n');
-      }
-    } else {
-      print('❌ NOT CONNECTED - Cannot send data\n');
-    }
+Future<void> sendData(String data) async {
+  print('📡 SENDING DATA TO DEVICE...');
+  print('   Data: "$data"');
+  print('   Connection Status: $isConnected');
+
+  if (!isConnected) return;
+
+  try {
+    await _ble.writeCharacteristicWithoutResponse(
+      txCharacteristic,
+      value: utf8.encode(data),
+    );
+    print('✅ DATA SENT SUCCESSFULLY\n');
+  } catch (e) {
+    print('❌ ERROR SENDING DATA: $e\n');
   }
+}
+
 
   /// Send slot ID to vending machine
-  Future<void> sendSlotId(int slotId) async {
-    print('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    print('🎯 BLUETOOTH TRANSMISSION - SLOT ID');
-    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    print('   Slot ID: $slotId');
-    print('   Connection Status: ${isConnected ? '✅ CONNECTED' : '❌ DISCONNECTED'}');
-    
-    if (isConnected) {
-      // Send format: SLOT:3\n (with newline terminator for robust parsing)
-      String slotCommand = 'SLOT:$slotId\n';
-      print('   Command: "${slotCommand.replaceAll('\n', '\\n')}"');
-      await sendData(slotCommand);
-    } else {
-      print('❌ CANNOT TRANSMIT - Device not connected');
-      print('   Please ensure vending machine is connected via Bluetooth');
-      print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
-    }
+Future<void> sendSlotId(int slotId) async {
+  print('\n🎯 SENDING SLOT COMMAND: $slotId');
+
+  if (!isConnected) {
+    print('❌ NOT CONNECTED');
+    return;
   }
+
+  await sendData("SLOT:$slotId");
+}
 
   /// Listen for incoming data from ESP32
   Stream<List<int>> receiveData() {
