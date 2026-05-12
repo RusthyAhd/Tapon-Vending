@@ -44,6 +44,10 @@ dependencies:
   get: ^4.7.2
   flutter_reactive_ble: ^5.4.0
   permission_handler: ^11.4.0
+  shared_preferences: ^2.2.0
+  google_sign_in: ^6.2.1
+  google_fonts: ^6.2.1
+  animated_text_kit: ^4.2.2
   
 
 dev_dependencies:
@@ -56,6 +60,14 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.10.0
+flutter_icons:
+  android: true
+  ios: true
+  web:
+    generate: true
+    image_path: "assets/images/logo.png"
+  image_path: "assets/images/logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

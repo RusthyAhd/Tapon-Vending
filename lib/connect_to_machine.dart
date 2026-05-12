@@ -241,11 +241,11 @@ class _ConnectToMachinePageState extends State<ConnectToMachinePage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Color.fromRGBO(5, 248, 175, 1)),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back, color: Color.fromRGBO(5, 248, 175, 1)),
+        //   onPressed: () => Navigator.pop(context),
+        // ),
+        title: const Text(
           "Connect to Machine",
           style: TextStyle(
             color: Colors.white,

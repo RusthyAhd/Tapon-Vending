@@ -5,32 +5,49 @@ import 'package:tapon_vending/forgot_password/forgot_password_view.dart';
 import 'package:tapon_vending/login/login_view_model.dart';
 import 'package:tapon_vending/sign_up/signup_view.dart';
 
-class LoginPage extends StatelessWidget {
-  //  void _handleGoogleSignIn(BuildContext context) async {
-  //   User? user = await GoogleSignInService().signInWithGoogle();
-  //   if (user != null) {
-  //     // Navigate to home page or profile
-  //     Navigator.pushReplacementNamed(context, '/home');
-  //   } else {
-  //     // Handle error or display message
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text("Google Sign-In Failed")),
-  //     );
-  //   }
-  // }
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
 
- 
-  
-  LoginPage({super.key});
+class _LoginPageState extends State<LoginPage> {
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize controllers - they will be populated with saved values by the ViewModel
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => LoginViewModel(),
       child: Consumer<LoginViewModel>(builder: (context, viewModel, child) {
+        if (emailController.text != viewModel.emailOrMobile) {
+          emailController.text = viewModel.emailOrMobile;
+          emailController.selection = TextSelection.collapsed(
+            offset: emailController.text.length,
+          );
+        }
+        if (passwordController.text != viewModel.password) {
+          passwordController.text = viewModel.password;
+          passwordController.selection = TextSelection.collapsed(
+            offset: passwordController.text.length,
+          );
+        }
         return Scaffold(
           backgroundColor: Colors.black,
           body: LayoutBuilder(
@@ -78,11 +95,40 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 10),
+                          // Error Message Display
+                          if (viewModel.errorMessage != null)
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 15),
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.red.withOpacity(0.1),
+                                border: Border.all(color: Colors.red, width: 1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.error_outline,
+                                      color: Colors.red, size: 20),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      viewModel.errorMessage!,
+                                      style: const TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               'Enter email or mobile number',
-                              style: TextStyle(color: Colors.white, fontSize: 18),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
                               textAlign: TextAlign.start,
                             ),
                           ),
@@ -90,6 +136,8 @@ class LoginPage extends StatelessWidget {
                           CustomTextField(
                             hint: "Enter your email or mobile number",
                             controller: emailController,
+                            onChanged: (value) =>
+                                viewModel.setEmailOrMobile(value),
                           ),
                           const SizedBox(height: 10),
                           Align(
@@ -97,7 +145,8 @@ class LoginPage extends StatelessWidget {
                             child: Text(
                               'Enter password',
                               textAlign: TextAlign.start,
-                              style: TextStyle(color: Colors.white, fontSize: 18),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -105,6 +154,7 @@ class LoginPage extends StatelessWidget {
                             hint: "**************",
                             controller: passwordController,
                             isPassword: true,
+                            onChanged: (value) => viewModel.setPassword(value),
                           ),
                           const SizedBox(height: 10),
                           Row(
@@ -119,7 +169,9 @@ class LoginPage extends StatelessWidget {
                                   ),
                                   const Text(
                                     "Remember Me",
-                                    style: TextStyle(color: Color.fromRGBO(215, 215, 215, 0.6)),
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromRGBO(215, 215, 215, 0.6)),
                                   ),
                                 ],
                               ),
@@ -128,7 +180,8 @@ class LoginPage extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ForgotPasswordView(),
+                                      builder: (context) =>
+                                          ForgotPasswordView(),
                                     ),
                                   );
                                 },
@@ -155,17 +208,23 @@ class LoginPage extends StatelessWidget {
                             ),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 15),
                                 backgroundColor: Colors.transparent,
                                 shadowColor: Colors.transparent,
                               ),
-                              onPressed: () {
-                                viewModel.setEmailOrMobile(emailController.text);
-                                viewModel.setPassword(passwordController.text);
-                                viewModel.login(context);
-                              },
+                              onPressed: viewModel.isLoading
+                                  ? null
+                                  : () {
+                                      viewModel.setEmailOrMobile(
+                                          emailController.text);
+                                      viewModel
+                                          .setPassword(passwordController.text);
+                                      viewModel.login(context);
+                                    },
                               child: viewModel.isLoading
-                                  ? const CircularProgressIndicator(color: Colors.white)
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white)
                                   : const Text(
                                       "Log In",
                                       style: TextStyle(
@@ -181,7 +240,8 @@ class LoginPage extends StatelessWidget {
                           const SizedBox(height: 10),
                           const Text(
                             "Don't have an account?",
-                            style: TextStyle(color: Color.fromRGBO(215, 215, 215, 0.6)),
+                            style: TextStyle(
+                                color: Color.fromRGBO(215, 215, 215, 0.6)),
                           ),
                           TextButton(
                             onPressed: () {
@@ -193,8 +253,9 @@ class LoginPage extends StatelessWidget {
                               );
                             },
                             child: const Text(
-                              "Sign In Now",
-                              style: TextStyle(color: Color.fromRGBO(1, 181, 1, 1)),
+                              "Sign Up Now",
+                              style: TextStyle(
+                                  color: Color.fromRGBO(1, 181, 1, 1)),
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -202,8 +263,10 @@ class LoginPage extends StatelessWidget {
                             children: [
                               Expanded(child: Divider(color: Colors.white)),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text("Or", style: TextStyle(color: Colors.white)),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text("Or",
+                                    style: TextStyle(color: Colors.white)),
                               ),
                               Expanded(child: Divider(color: Colors.white)),
                             ],
@@ -212,16 +275,21 @@ class LoginPage extends StatelessWidget {
                           OutlinedButton.icon(
                             style: OutlinedButton.styleFrom(
                               minimumSize: Size(double.infinity, 40),
-                              backgroundColor: Color.fromRGBO(22, 22, 22, 1).withOpacity(0.9),
+                              backgroundColor: Color.fromRGBO(22, 22, 22, 1)
+                                  .withOpacity(0.9),
                               foregroundColor: Colors.white,
-                              side: const BorderSide(color: Color.fromRGBO(43, 45, 51, 1)),
+                              side: const BorderSide(
+                                  color: Color.fromRGBO(43, 45, 51, 1)),
                             ),
-                            icon: Image.asset("assets/images/google.png", height: 20),
+                            icon: Image.asset("assets/images/google.png",
+                                height: 20),
                             label: const Padding(
                               padding: EdgeInsets.only(left: 20.0),
                               child: Text("Sign in with Google"),
                             ),
-                             onPressed: () {}
+                            onPressed: viewModel.isLoading
+                                ? null
+                                : () => viewModel.signInWithGoogle(context),
                           ),
                         ],
                       ),
