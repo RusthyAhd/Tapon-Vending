@@ -37,6 +37,9 @@ class HomeViewModel extends ChangeNotifier {
           priceBefore: doc['priceBefore'],
           priceAfter: doc['priceAfter'],
           slotId: doc['slotId'] ?? 0, // Fetch slot ID from Firebase
+          imageUrl: doc.data().toString().contains('imageUrl')
+              ? doc['imageUrl']
+              : null,
         );
       }).toList();
 

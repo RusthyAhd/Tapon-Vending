@@ -44,7 +44,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
           return Scaffold(
             backgroundColor: Colors.black,
             body: viewModel.isLoading
-                ? Center(child: CircularProgressIndicator(color: Colors.green))
+                ? Center(
+                      child: CircularProgressIndicator(color: Colors.green),
+                    )
+                
                 : Stack(
                     children: [
                       Positioned(
@@ -90,12 +93,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 150),
+                      Positioned.fill(
+                        child: SingleChildScrollView(
+                          padding: EdgeInsets.only(
+                            left: 16,
+                            right: 16,
+                            top: 16,
+                            bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 150),
                             // Name Field
                             Text("Name", style: TextStyle(color: Colors.white)),
                             TextField(
@@ -152,7 +161,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
 
                             // Save Button
-                            Spacer(),
+                            const SizedBox(height: 20),
                             Center(
                               child: Container(
                                 height: 50, // Added width to the button
@@ -181,6 +190,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           content: Text(
                                               "Your profile details updated")),
                                     );
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage()),
+                                    );
                                   },
                                   child: Text("Save",
                                       style: TextStyle(
@@ -190,7 +204,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                               ),
                             ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],

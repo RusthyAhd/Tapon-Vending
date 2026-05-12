@@ -4,6 +4,7 @@ class ProductModel {
   final num priceBefore;
   final num priceAfter;
   final int slotId; // Vending machine slot ID
+  final String? imageUrl;
 
   ProductModel({
     required this.id,
@@ -11,6 +12,7 @@ class ProductModel {
     required this.priceBefore,
     required this.priceAfter,
     required this.slotId,
+    this.imageUrl,
   });
 
 //  factory ProductModel.fromMap(Map<String, dynamic> data) {
