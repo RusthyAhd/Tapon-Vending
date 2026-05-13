@@ -43,173 +43,180 @@ class _EditProfilePageState extends State<EditProfilePage> {
         builder: (context, viewModel, child) {
           return Scaffold(
             backgroundColor: Colors.black,
-            body: viewModel.isLoading
-                ? Center(
-                      child: CircularProgressIndicator(color: Colors.green),
-                    )
-                
-                : Stack(
-                    children: [
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        child: Container(
-                          width: 240,
-                          height: 210,
-                          decoration: const BoxDecoration(
-                            color: Color.fromRGBO(5, 248, 175, 0.3),
-                            borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(130),
-                            ),
-                          ),
-                        ),
+            body: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Container(
+                    width: 240,
+                    height: 210,
+                    decoration: const BoxDecoration(
+                      color: Color.fromRGBO(5, 248, 175, 0.3),
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(130),
                       ),
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        child: Container(
-                          width: 220,
-                          height: 190,
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(1, 192, 135, 0.52),
-                            borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(130),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // add sizebox to add space between the text and the top
-                      Positioned(
-                        top: 80,
-                        left: (MediaQuery.of(context).size.width - 200) / 2,
-                        child: Center(
-                          child: Text(
-                            "EDIT PROFILE",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned.fill(
-                        child: SingleChildScrollView(
-                          padding: EdgeInsets.only(
-                            left: 16,
-                            right: 16,
-                            top: 16,
-                            bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 150),
-                            // Name Field
-                            Text("Name", style: TextStyle(color: Colors.white)),
-                            TextField(
-                              controller: viewModel.nameController,
-                              decoration: _inputDecoration("Enter your name"),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(height: 10),
-
-                            // Email Field
-                            Text("Email",
-                                style: TextStyle(color: Colors.white)),
-                            TextField(
-                              controller: viewModel.emailController,
-                              decoration: _inputDecoration("Enter your email"),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(height: 10),
-
-                            // Mobile Field
-                            Text("Mobile",
-                                style: TextStyle(color: Colors.white)),
-                            TextField(
-                              controller: viewModel.mobileController,
-                              decoration: _inputDecoration("Enter your number"),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(height: 10),
-// Display Balance
-                            Text(
-                                "Balance: \Rs.${viewModel.balance.toStringAsFixed(2)}",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16)),
-
-                            SizedBox(height: 10),
-                            // Password Section
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Password",
-                                    style: TextStyle(color: Colors.white)),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ChangePasswordView())); // Implement Change Password logic
-                                  },
-                                  child: Text("Change",
-                                      style: TextStyle(color: Colors.green)),
-                                ),
-                              ],
-                            ),
-
-                            // Save Button
-                            const SizedBox(height: 20),
-                            Center(
-                              child: Container(
-                                height: 50, // Added width to the button
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Color.fromRGBO(1, 181, 1, 1),
-                                      Color.fromRGBO(1, 135, 95, 1)
-                                    ],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 50, vertical: 15),
-                                    backgroundColor: Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                  ),
-                                  onPressed: () {
-                                    viewModel.updateUserProfile();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              "Your profile details updated")),
-                                    );
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomePage()),
-                                    );
-                                  },
-                                  child: Text("Save",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16)),
-                                ),
-                              ),
-                            ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Container(
+                    width: 220,
+                    height: 190,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(1, 192, 135, 0.52),
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(130),
+                      ),
+                    ),
+                  ),
+                ),
+                // add sizebox to add space between the text and the top
+                Positioned(
+                  top: 80,
+                  left: (MediaQuery.of(context).size.width - 200) / 2,
+                  child: Center(
+                    child: Text(
+                      "EDIT PROFILE",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned.fill(
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      top: 16,
+                      bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 150),
+                        viewModel.isLoading
+                            ? _buildSkeletonProfile()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Name Field
+                                  Text("Name",
+                                      style: TextStyle(color: Colors.white)),
+                                  TextField(
+                                    controller: viewModel.nameController,
+                                    decoration:
+                                        _inputDecoration("Enter your name"),
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  SizedBox(height: 10),
+                                  // Email Field
+                                  Text("Email",
+                                      style: TextStyle(color: Colors.white)),
+                                  TextField(
+                                    controller: viewModel.emailController,
+                                    decoration:
+                                        _inputDecoration("Enter your email"),
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  SizedBox(height: 10),
+                                  // Mobile Field
+                                  Text("Mobile",
+                                      style: TextStyle(color: Colors.white)),
+                                  TextField(
+                                    controller: viewModel.mobileController,
+                                    decoration:
+                                        _inputDecoration("Enter your number"),
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  SizedBox(height: 10),
+                                  // Display Balance
+                                  Text(
+                                      "Balance: \Rs.${viewModel.balance.toStringAsFixed(2)}",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16)),
+                                  SizedBox(height: 10),
+                                  // Password Section
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Password",
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ChangePasswordView()));
+                                        },
+                                        child: Text("Change",
+                                            style:
+                                                TextStyle(color: Colors.green)),
+                                      ),
+                                    ],
+                                  ),
+                                  // Save Button
+                                  const SizedBox(height: 20),
+                                  Center(
+                                    child: Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color.fromRGBO(1, 181, 1, 1),
+                                            Color.fromRGBO(1, 135, 95, 1)
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 50, vertical: 15),
+                                          backgroundColor: Colors.transparent,
+                                          shadowColor: Colors.transparent,
+                                        ),
+                                        onPressed: () {
+                                          viewModel.updateUserProfile();
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    "Your profile details updated")),
+                                          );
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomePage()),
+                                          );
+                                        },
+                                        child: Text("Save",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16)),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
             bottomNavigationBar: CustomBottomNavBar(
               selectedIndex: _selectedIndex,
               onItemTapped: _onItemTapped,
@@ -217,6 +224,108 @@ class _EditProfilePageState extends State<EditProfilePage> {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildSkeletonProfile() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Name Skeleton
+        Container(
+          height: 14,
+          width: 50,
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 0.08),
+            border: Border.all(
+              color: const Color.fromRGBO(255, 255, 255, 0.1),
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        const SizedBox(height: 15),
+        // Email Skeleton
+        Container(
+          height: 14,
+          width: 50,
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 0.08),
+            border: Border.all(
+              color: const Color.fromRGBO(255, 255, 255, 0.1),
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        const SizedBox(height: 15),
+        // Mobile Skeleton
+        Container(
+          height: 14,
+          width: 60,
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 0.08),
+            border: Border.all(
+              color: const Color.fromRGBO(255, 255, 255, 0.1),
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        const SizedBox(height: 15),
+        // Balance Skeleton
+        Container(
+          height: 16,
+          width: 150,
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        const SizedBox(height: 15),
+        // Password Row Skeleton
+        Container(
+          height: 14,
+          width: 80,
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(255, 255, 255, 0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        const SizedBox(height: 20),
+        // Save Button Skeleton
+        Center(
+          child: Container(
+            height: 50,
+            width: 150,
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(255, 255, 255, 0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

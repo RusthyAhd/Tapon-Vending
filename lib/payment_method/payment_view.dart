@@ -200,30 +200,60 @@ class BalanceCard extends StatelessWidget {
             color: Colors.blueGrey.shade900,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "My Balance",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+          child: viewModel.isLoading
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 16,
+                      width: 120,
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(255, 255, 255, 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.refresh, color: Colors.white70),
-                    onPressed: () => viewModel.fetchBalance(),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              viewModel.isLoading
-                  ? Center(child: CircularProgressIndicator(color: Colors.green))
-                  : Text(
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 32,
+                      width: 180,
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(255, 255, 255, 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 14,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(255, 255, 255, 0.08),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "My Balance",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.refresh, color: Colors.white70),
+                          onPressed: () => viewModel.fetchBalance(),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
                       "${viewModel.balance.toStringAsFixed(2)} LkR",
                       style: TextStyle(
                         color: viewModel.balance < 0 ? Colors.redAccent : Colors.greenAccent,
@@ -231,16 +261,16 @@ class BalanceCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-              const SizedBox(height: 10),
-              const Text(
-                "Please top up your balance to keep your account active.",
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 14,
+                    const SizedBox(height: 10),
+                    const Text(
+                      "Please top up your balance to keep your account active.",
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         );
       },
     );
