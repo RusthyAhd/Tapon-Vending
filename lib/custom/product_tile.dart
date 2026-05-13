@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tapon_vending/custom/confirmation_dialog.dart';
+import 'package:tapon_vending/custom/success_dialog.dart';
 import 'package:tapon_vending/home/product_model.dart';
 import 'package:tapon_vending/bluetooth_service.dart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -49,7 +50,7 @@ class _ProductTileState extends State<ProductTile> {
                 BluetoothService bluetoothService = BluetoothService();
                 await bluetoothService.sendSlotId(product.slotId);
 
-                showSuccessDialog(context);
+                showSuccessDialog(context, 'Success!', 'Product is being dispensed...');
               } else {
                 print('\n❌ PURCHASE FAILED OR CANCELLED');
               }
@@ -270,44 +271,118 @@ class _ProductTileState extends State<ProductTile> {
     }
   }
 
-  void showSuccessDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        print(
-            '✨ SUCCESS DIALOG DISPLAYED - Vending machine should now dispense product');
-        return AlertDialog(
-          title: Text("Success"),
-          content: Text("Your purchase was successful! Product dispensing..."),
-          actions: [
-            TextButton(
-              onPressed: () {
-                print('📍 User closed success dialog\n');
-                Navigator.pop(context); // Close the dialog
-              },
-              child: Text("OK"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void showErrorDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Error"),
-          content: Text("Insufficient balance. Please top up your account."),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Close the dialog
-              },
-              child: Text("OK"),
+      barrierDismissible: false,
+      barrierColor: Colors.black54,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 243, 248, 240),
+              borderRadius: BorderRadius.circular(24),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.redAccent.withOpacity(0.2),
+                  blurRadius: 24,
+                  offset: const Offset(0, 12),
+                ),
+              ],
             ),
-          ],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Header with error icon
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Insufficient Balance',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Icon(
+                          Icons.error_outline,
+                          color: Colors.redAccent,
+                          size: 24,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Divider
+                Container(
+                  height: 1,
+                  color: Colors.redAccent.withOpacity(0.2),
+                ),
+                // Content
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Text(
+                    'Please top up your account to complete this purchase.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black.withOpacity(0.7),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                // Action button
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                  child: Container(
+                    width: double.infinity,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: Colors.redAccent.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.redAccent.withOpacity(0.4),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        borderRadius: BorderRadius.circular(12),
+                        child: const Center(
+                          child: Text(
+                            'OK',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
