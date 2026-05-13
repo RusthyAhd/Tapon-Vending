@@ -5,6 +5,7 @@ import 'package:tapon_vending/home/product_model.dart';
 import 'package:tapon_vending/bluetooth_service.dart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class ProductTile extends StatefulWidget {
   final ProductModel product;
@@ -263,6 +264,7 @@ class _ProductTileState extends State<ProductTile> {
         print('❌ INSUFFICIENT BALANCE');
         print('  • Balance Needed: Rs. ${product.priceAfter - currentBalance}');
         showErrorDialog(context);
+
         return false; // Not enough balance
       }
     } catch (e) {
@@ -271,7 +273,15 @@ class _ProductTileState extends State<ProductTile> {
     }
   }
 
-  void showErrorDialog(BuildContext context) {
+  void showErrorDialog(BuildContext context) async  {
+
+     try {
+    final audioPlayer = AudioPlayer();
+    await audioPlayer.play(AssetSource('images/low balance.mp3'));
+  } catch (e) {
+    // Silently fail if sound doesn't play
+    print('Error playing low balance sound: $e');
+  }
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -310,19 +320,7 @@ class _ProductTileState extends State<ProductTile> {
                           color: Colors.black,
                         ),
                       ),
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.redAccent.withOpacity(0.15),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Icon(
-                          Icons.error_outline,
-                          color: Colors.redAccent,
-                          size: 24,
-                        ),
-                      ),
+                    
                     ],
                   ),
                 ),
