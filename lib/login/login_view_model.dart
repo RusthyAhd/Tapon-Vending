@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tapon_vending/connect_to_machine.dart';
 //import 'package:tapon_vending/connect_to_machine.dart';
 import 'package:tapon_vending/home/home_view.dart';
 import 'package:tapon_vending/services/google_sign_in_service.dart';
@@ -169,7 +170,7 @@ class LoginViewModel extends ChangeNotifier {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => ConnectToMachinePage()),
       );
     } on FirebaseAuthException catch (e) {
       isLoading = false;
