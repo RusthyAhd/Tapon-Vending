@@ -170,7 +170,7 @@ class LoginViewModel extends ChangeNotifier {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ConnectToMachinePage()),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     } on FirebaseAuthException catch (e) {
       isLoading = false;

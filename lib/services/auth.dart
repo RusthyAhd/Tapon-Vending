@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tapon_vending/profile/profile_model.dart';
+import 'package:tapon_vending/network/connectivity_service.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -8,7 +9,8 @@ class FirebaseAuthService {
   // Sign Up
   Future<UserCredential?> signUp(String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -49,14 +51,15 @@ class FirebaseAuthService {
   User? getCurrentUser() {
     return _auth.currentUser;
   }
- 
+
   // Fetch User Profile Data
   Future<UserProfileModel?> getUserProfile() async {
     User? user = _auth.currentUser;
     if (user == null) return null;
 
     try {
-      DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
+      DocumentSnapshot userDoc =
+          await _firestore.collection('users').doc(user.uid).get();
 
       if (userDoc.exists) {
         return UserProfileModel(
@@ -78,13 +81,16 @@ class FirebaseAuthService {
     if (user == null) return;
 
     try {
-      await _firestore.collection('users').doc(user.uid).update({
-        'name': profile.name,
-        'email': profile.email,
-        'mobile': profile.mobile,
+      await FirestoreOperationGuard.instance.runWrite('users:${user.uid}',
+          () async {
+        await _firestore.collection('users').doc(user.uid).update({
+          'name': profile.name,
+          'email': profile.email,
+          'mobile': profile.mobile,
+        });
       });
     } catch (e) {
       print("Error updating user data: $e");
     }
-  } 
+  }
 }

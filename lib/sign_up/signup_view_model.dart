@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tapon_vending/login/login_view.dart';
+import 'package:tapon_vending/network/connectivity_service.dart';
 
 class SignupViewModel extends ChangeNotifier {
   String name = "";
@@ -85,46 +86,65 @@ class SignupViewModel extends ChangeNotifier {
     }
 
     try {
-      isLoading = true;
-      errorMessage = null;
-      notifyListeners();
-
-      print("Signing up with email: $email and password: $password");
-
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email.trim(),
-        password: password,
-      );
-
-      User? user = userCredential.user;
-      if (user != null) {
-        await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
-          "name": name,
-          "email": email.trim(),
-          "mobile": mobile,
-          "userId": user.uid,
-          "createdAt": FieldValue.serverTimestamp(),
-          "balance": 0, // Initial balance set to zero
-        });
-
-        isLoading = false;
+      await ConnectivityActionGuard.instance.run('signup', () async {
+        isLoading = true;
+        errorMessage = null;
         notifyListeners();
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Signup Successful"),
-            backgroundColor: Colors.green,
-          ),
+        print("Signing up with email: $email and password: $password");
+
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email.trim(),
+          password: password,
         );
 
-        print("User signed up successfully: ${user.uid}");
+        User? user = userCredential.user;
+        if (user != null) {
+          await FirestoreOperationGuard.instance.runWrite('users:${user.uid}',
+              () async {
+            await FirebaseFirestore.instance
+                .collection("users")
+                .doc(user.uid)
+                .set({
+              "name": name,
+              "email": email.trim(),
+              "mobile": mobile,
+              "userId": user.uid,
+              "createdAt": FieldValue.serverTimestamp(),
+              "balance": 0, // Initial balance set to zero
+            });
+          });
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
-        );
-      }
+          isLoading = false;
+          notifyListeners();
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Signup Successful"),
+              backgroundColor: Colors.green,
+            ),
+          );
+
+          print("User signed up successfully: ${user.uid}");
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+        }
+      });
+    } on ConnectivityGuardException catch (e) {
+      isLoading = false;
+      errorMessage = e.message;
+      notifyListeners();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message),
+          backgroundColor: Colors.red,
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       isLoading = false;
 
@@ -184,8 +204,10 @@ class SignupViewModel extends ChangeNotifier {
 Future<void> saveUserName(String name) async {
   User? user = FirebaseAuth.instance.currentUser;
   if (user != null) {
-    await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-      'name': name,
+    await FirestoreOperationGuard.instance.runWrite('users:${user.uid}', () {
+      return FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'name': name,
+      });
     });
   }
 }

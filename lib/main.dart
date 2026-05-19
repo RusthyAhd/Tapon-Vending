@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tapon_vending/firebase_options.dart';
 import 'package:tapon_vending/login/login_view.dart';
+import 'package:tapon_vending/network/connectivity_guard.dart';
+import 'package:tapon_vending/network/connectivity_service.dart';
 
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +50,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform, // Use generated options
   );
 
+  await ConnectivityService.instance.start();
+
   runApp(const MyApp());
 }
 
@@ -65,6 +69,8 @@ class MyApp extends StatelessWidget {
           ThemeData.dark().textTheme,
         ),
       ),
+      builder: (context, child) =>
+          ConnectivityGuard(child: child ?? const SizedBox.shrink()),
       home: LoginPage(),
     );
   }
