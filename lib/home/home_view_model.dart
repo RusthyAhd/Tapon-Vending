@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tapon_vending/home/product_model.dart';
 
+
+
 class HomeViewModel extends ChangeNotifier {
   List<ProductModel> _products = [];
   String _userName = '';
