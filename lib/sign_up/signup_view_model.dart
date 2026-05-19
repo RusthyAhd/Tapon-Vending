@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tapon_vending/login/login_view.dart';
@@ -21,17 +22,20 @@ class SignupViewModel extends ChangeNotifier {
   void setEmail(String value) {
     email = value;
     errorMessage = null;
+    errorMessage = null;
     notifyListeners();
   }
 
   void setPassword(String value) {
     password = value;
     errorMessage = null;
+    errorMessage = null;
     notifyListeners();
   }
 
   void setName(String value) {
     name = value;
+    errorMessage = null;
     errorMessage = null;
     notifyListeners();
   }
@@ -44,18 +48,24 @@ class SignupViewModel extends ChangeNotifier {
 
   void clearError() {
     errorMessage = null;
+    errorMessage = null;
     notifyListeners();
   }
+
+ 
 
   /// ✅ Function to validate email format
   bool isValidEmail(String email) {
     return RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
+   
   }
 
   Future<void> signup(BuildContext context) async {
     if (!agreeToTerms) {
+      errorMessage = "Please agree to the terms and conditions";
+      notifyListeners();
       errorMessage = "Please agree to the terms and conditions";
       notifyListeners();
       return;
@@ -64,10 +74,26 @@ class SignupViewModel extends ChangeNotifier {
     if (email.isEmpty || password.isEmpty || name.isEmpty || mobile.isEmpty) {
       errorMessage = "All fields are required";
       notifyListeners();
+      errorMessage = "All fields are required";
+      notifyListeners();
       return;
     }
 
     if (!isValidEmail(email)) {
+      errorMessage = "Please enter a valid email address";
+      notifyListeners();
+      return;
+    }
+
+    if (password.length < 6) {
+      errorMessage = "Password must be at least 6 characters long";
+      notifyListeners();
+      return;
+    }
+
+    if (mobile.length < 10) {
+      errorMessage = "Please enter a valid phone number";
+      notifyListeners();
       errorMessage = "Please enter a valid email address";
       notifyListeners();
       return;
@@ -175,6 +201,35 @@ class SignupViewModel extends ChangeNotifier {
       errorMessage = message;
       notifyListeners();
 
+      isLoading = false;
+
+      
+      switch (e.code) {
+        case 'weak-password':
+          message = 'The password is too weak. Use a stronger password.';
+          break;
+        case 'email-already-in-use':
+          message = 'This email is already registered. Try logging in instead.';
+          break;
+        case 'invalid-email':
+          message = 'The email address is not valid.';
+          break;
+        case 'operation-not-allowed':
+          message = 'Sign up is currently disabled. Please try again later.';
+          break;
+        case 'network-request-failed':
+          message = 'Network error. Check your connection and try again.';
+          break;
+        case 'too-many-requests':
+          message = 'Too many attempts. Please try again later.';
+          break;
+        default:
+          message = 'Sign up failed. Please try again.';
+      }
+
+      errorMessage = message;
+      notifyListeners();
+
       print("FirebaseAuthException: ${e.code} - ${e.message}");
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -182,10 +237,15 @@ class SignupViewModel extends ChangeNotifier {
           content: Text(message),
           backgroundColor: Colors.red,
         ),
+      
       );
     } catch (e) {
       isLoading = false;
+      isLoading = false;
       print("Unexpected error: $e");
+
+      errorMessage = 'Something went wrong. Please try again.';
+      notifyListeners();
 
       errorMessage = 'Something went wrong. Please try again.';
       notifyListeners();
@@ -195,6 +255,7 @@ class SignupViewModel extends ChangeNotifier {
           content: Text('Something went wrong. Please try again.'),
           backgroundColor: Colors.red,
         ),
+     
       );
     }
   }
@@ -211,3 +272,4 @@ Future<void> saveUserName(String name) async {
     });
   }
 }
+
